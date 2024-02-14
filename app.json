@@ -15,7 +15,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.hulaaaa.igainsclient"
     },
     "android": {
       "adaptiveIcon": {
@@ -36,10 +37,21 @@
             "../fonts/light.otf",
             "../fonts/light-italic.otf",
             "../fonts/bold.otf",
-            "../fonts/bold-italic.otf",
+            "../fonts/bold-italic.otf"
           ]
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "3049a2d5-f865-491f-9415-409d8680b2a7"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/3049a2d5-f865-491f-9415-409d8680b2a7"
+    }
   }
 }
