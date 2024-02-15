@@ -1,10 +1,9 @@
 import * as Haptics from 'expo-haptics';
-import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { SafeAreaView, StyleSheet, Image, Text, TouchableOpacity, View, Dimensions } from 'react-native'
 import React from 'react'
 import { useCallback } from 'react';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
-import { LinearGradient } from 'expo-linear-gradient';
 import Splash_IconGains from '../../../assets/svg/Splash_IconGains';
 import Splash_GainsText from '../../../assets/svg/Splash_GainsText';
 import Arrow from '../../../assets/svg/Arrow';
@@ -36,68 +35,64 @@ export default function SplashStart() {
   }
 
   return (
-    <LinearGradient
-      colors={['#E0FE10', '#06070A']}
-      end={{ x: 0.46, y: 0.46 }}
-      style={styles.container}
-      onLayout={onLayoutRootView}
-    >
-      <View style={styles.underDiv}>
-        <Splash_IconGains />
-        <Text style={{
-          zIndex: 1,
-          fontFamily: 'Bold',
-          fontSize: 38,
-          opacity: 0.40,
-          color: '#FFFFFF',
-          textAlign: 'center',
-          marginTop: -20
-        }}>One app and build</Text>
-        <Text style={{
-          zIndex: 1,
-          fontFamily: 'Bold',
-          fontSize: 38,
-          opacity: 0.55,
-          color: '#FFFFFF',
-          textAlign: 'center',
-        }}>Body Of Your Dream</Text>
-        <Text style={{
-          zIndex: 1,
-          fontFamily: 'Bold',
-          fontSize: 38,
-          opacity: 0.75,
-          color: '#FFFFFF',
-          textAlign: 'center',
-        }}>is</Text>
-      </View>
-
-      <Splash_GainsText />
-
-      <Animated.View style={styles.bottomDiv}>
-        <SplashStories/>
-       
-        <View style={styles.bottomBtn}>
-          <TouchableOpacity onPress={()=>{
-              Haptics.notificationAsync(
-                Haptics.NotificationFeedbackType.Success
-              )
-              navigation.navigate('Register')
-            }} style={styles.containerBtn2}>
-            <Text style={styles.text2}>Skip</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.containerBtn} onPress={()=>{
-            Haptics.notificationAsync(
-              Haptics.NotificationFeedbackType.Success
-            )
-            navigation.navigate('Register')
-            }}>
-            <Text style={styles.text}>Next</Text>
-            <Arrow />
-          </TouchableOpacity>
+    <View style={styles.container} onLayout={onLayoutRootView}>
+      <Image style={styles.imgBg} alt='img' source={require('../../../assets/images/app/splash_start_img.png')} />
+      <View style={styles.contantDiv}>
+        {/* Icon */}
+        <View>
+          <Splash_GainsText />
         </View>
-      </Animated.View>
+
+        {/* Text */}
+        <View style={styles.mainContantDiv}>
+          <View>
+            <SplashStories />
+          </View>
+          <View style={styles.btnDiv}>
+            <TouchableOpacity>
+              <View style={{
+                width: Dimensions.get('window').width - 80,
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 10,
+                paddingVertical: 20,
+                backgroundColor: '#1E1E1E',
+                borderRadius: 15,
+              }}>
+                <Text style={{
+                  fontFamily: 'Bold',
+                  fontSize: 17,
+                  color: '#FFFFFF',
+                  textAlign: 'center',
+                }}>
+                  Create an account
+                </Text>
+                <Arrow color={'#FFFFFF'} />
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 5, }}>
+              <Text style={{
+                fontFamily: 'Light',
+                fontSize: 16,
+                color: '#FFFFFF',
+              }}>
+                Already have an account?
+              </Text>
+              <Text style={{
+                fontFamily: 'Bold',
+                fontSize: 16,
+                color: '#FFFFFF',
+              }}>
+                Log in
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
       <StatusBar style="dark" />
-    </LinearGradient>
+    </View>
   )
 }
 
@@ -106,76 +101,40 @@ const styles = StyleSheet.create({
     flex: 1,
     fontFamily: 'Bold',
     alignItems: 'center',
-    paddingTop: 120,
+    backgroundColor: '#000000',
   },
-  underDiv: {
-    fontFamily: 'Bold',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 50,
-  },
-  bottomDiv: {
-    fontFamily: 'Bold',
+  imgBg: {
     position: 'absolute',
-    bottom: 0,
+    top: 0,
     left: 0,
+    zIndex: -1,
     width: '100%',
-    height: '44%',
-    borderTopLeftRadius: 25,
-    borderTopRightRadius: 25,
-    backgroundColor: '#17181B',
+    height: '100%',
+  },
+  contantDiv: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    paddingBottom: 45,
-    paddingRight: 20,
-    paddingLeft: 20,
-    paddingTop: 40,
     justifyContent: 'space-between',
+    width: '100%',
+    height: '100%',
+    paddingVertical: '25%'
   },
-  bottomBtn: {
+  mainContantDiv: {
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'column',
     alignItems: 'center',
-    gap: 20,
   },
-  containerBtn: {
+  textDiv: {
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
-    paddingBottom: 17,
-    width: '45%',
-    paddingTop: 17,
-    backgroundColor: '#E0FE10',
-    gap: 10,
-    borderRadius: 12,
-    borderStyle: 'solid',
-    borderColor: '#262626',
-    borderWidth: 1,
+    gap: 40,
   },
-  text: {
-    color: '#1E1E1E',
-    fontFamily: 'Bold',
-    fontSize: 15,
-  },
-  containerBtn2: {
+  btnDiv: {
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
-    paddingBottom: 17,
-    width: '45%',
-    paddingTop: 17,
-    backgroundColor: '#1E1E1E',
-    borderRadius: 12,
-    borderStyle: 'solid',
-    borderColor: '#262626',
-    borderWidth: 1,
-  },
-  text2: {
-    color: '#FFFFFF',
-    fontFamily: 'Bold',
-    fontSize: 15,
-  },
+    gap: 30,
+  }
 })

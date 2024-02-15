@@ -1,9 +1,9 @@
 import * as React from "react"
 import Svg, { Path } from "react-native-svg"
-const Arrow = () => (
+const Arrow = ({color}) => (
   <Svg width={12} height={9} xmlns="http://www.w3.org/2000/svg" fill="none">
     <Path
-      stroke="#1E1E1E"
+      stroke={color}
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={1.3}
