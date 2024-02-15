@@ -34,7 +34,7 @@ export default function SplashStart() {
   return (
     <LinearGradient
       colors={['#E0FE10', '#06070A']}
-      end={{ x: 0.5, y: 0.5 }}
+      end={{ x: 0.46, y: 0.46 }}
       style={styles.container}
       onLayout={onLayoutRootView}
     >

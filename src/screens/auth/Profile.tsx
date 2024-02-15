@@ -4,6 +4,7 @@ import Tabs from '../../components/Tabs'
 import { useCallback } from 'react';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+import Animated from 'react-native-reanimated';
 
 SplashScreen.preventAutoHideAsync();
 

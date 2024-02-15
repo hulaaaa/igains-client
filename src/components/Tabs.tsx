@@ -15,10 +15,7 @@ SplashScreen.preventAutoHideAsync();
 
 export default function Tabs() {
     let currentRoute = useRoute().name;
-    // const [selectColor, setSelectColor] = useState("rgba(255, 255, 255, 0.5)")
-    // if(currentRoute === "Home" || currentRoute === "Stat" || currentRoute === "Planer" || currentRoute === "Profile"){
-    //     setSelectColor( "#E0FE10")
-    // }
+    
     const navigation = useNavigation();
     const [fontsLoaded, fontError] = useFonts({
         'Regular': require('../../assets/fonts/regular.otf'),
