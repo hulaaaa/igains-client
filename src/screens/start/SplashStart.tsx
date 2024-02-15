@@ -1,3 +1,4 @@
+import * as Haptics from 'expo-haptics';
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { useCallback } from 'react';
@@ -7,13 +8,15 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Splash_IconGains from '../../../assets/svg/Splash_IconGains';
 import Splash_GainsText from '../../../assets/svg/Splash_GainsText';
 import Arrow from '../../../assets/svg/Arrow';
-import { StatusBar } from 'expo-status-bar';
 import Animated from 'react-native-reanimated';
 import SplashStories from '../../components/SplashStories';
+import { useNavigation } from '@react-navigation/native';
+import { StatusBar } from 'expo-status-bar';
 
 SplashScreen.preventAutoHideAsync();
 
 export default function SplashStart() {
+  const navigation = useNavigation();
   const [fontsLoaded, fontError] = useFonts({
     'Regular': require('../../../assets/fonts/regular.otf'),
     'RegularItalic': require('../../../assets/fonts/regular-italic.otf'),
@@ -73,17 +76,26 @@ export default function SplashStart() {
         <SplashStories/>
        
         <View style={styles.bottomBtn}>
-          <TouchableOpacity style={styles.containerBtn2}>
+          <TouchableOpacity onPress={()=>{
+              Haptics.notificationAsync(
+                Haptics.NotificationFeedbackType.Success
+              )
+              navigation.navigate('Register')
+            }} style={styles.containerBtn2}>
             <Text style={styles.text2}>Skip</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.containerBtn}>
+          <TouchableOpacity style={styles.containerBtn} onPress={()=>{
+            Haptics.notificationAsync(
+              Haptics.NotificationFeedbackType.Success
+            )
+            navigation.navigate('Register')
+            }}>
             <Text style={styles.text}>Next</Text>
             <Arrow />
           </TouchableOpacity>
         </View>
       </Animated.View>
-
-      <StatusBar style="inverted" />
+      <StatusBar style="dark" />
     </LinearGradient>
   )
 }
