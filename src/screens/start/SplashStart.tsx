@@ -27,6 +27,7 @@ export default function SplashStart() {
   });
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded || fontError) {
+      await new Promise(resolve => setTimeout(resolve, 2000));
       await SplashScreen.hideAsync();
     }
   }, [fontsLoaded, fontError]);
