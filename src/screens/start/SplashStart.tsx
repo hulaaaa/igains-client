@@ -9,6 +9,7 @@ import Splash_GainsText from '../../../assets/svg/Splash_GainsText';
 import Arrow from '../../../assets/svg/Arrow';
 import { StatusBar } from 'expo-status-bar';
 import Animated from 'react-native-reanimated';
+import SplashStories from '../../components/SplashStories';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -21,16 +22,15 @@ export default function SplashStart() {
     'Bold': require('../../../assets/fonts/bold.otf'),
     'BoldItalic': require('../../../assets/fonts/bold-italic.otf'),
   });
-
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded || fontError) {
       await SplashScreen.hideAsync();
     }
   }, [fontsLoaded, fontError]);
-
   if (!fontsLoaded && !fontError) {
     return null;
   }
+
   return (
     <LinearGradient
       colors={['#E0FE10', '#06070A']}
@@ -38,13 +38,13 @@ export default function SplashStart() {
       style={styles.container}
       onLayout={onLayoutRootView}
     >
-      <Animated.View sharedTransitionTag="sharedTag" style={styles.underDiv}>
+      <View style={styles.underDiv}>
         <Splash_IconGains />
         <Text style={{
           zIndex: 1,
           fontFamily: 'Bold',
           fontSize: 38,
-          opacity: 0.45,
+          opacity: 0.40,
           color: '#FFFFFF',
           textAlign: 'center',
           marginTop: -20
@@ -53,7 +53,7 @@ export default function SplashStart() {
           zIndex: 1,
           fontFamily: 'Bold',
           fontSize: 38,
-          opacity: 0.65,
+          opacity: 0.55,
           color: '#FFFFFF',
           textAlign: 'center',
         }}>Body Of Your Dream</Text>
@@ -61,21 +61,17 @@ export default function SplashStart() {
           zIndex: 1,
           fontFamily: 'Bold',
           fontSize: 38,
-          opacity: 0.85,
+          opacity: 0.75,
           color: '#FFFFFF',
           textAlign: 'center',
         }}>is</Text>
-      </Animated.View>
+      </View>
 
       <Splash_GainsText />
 
       <Animated.View style={styles.bottomDiv}>
-        
-        <Text style={styles.bottomDivText}>
-          Sit back never worry about sharing bills!{'\n'}
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. {'\n'}
-          Corporis, sunt quia?{'\n'}
-        </Text>
+        <SplashStories/>
+       
         <View style={styles.bottomBtn}>
           <TouchableOpacity style={styles.containerBtn2}>
             <Text style={styles.text2}>Skip</Text>
@@ -86,6 +82,7 @@ export default function SplashStart() {
           </TouchableOpacity>
         </View>
       </Animated.View>
+
       <StatusBar style="inverted" />
     </LinearGradient>
   )
@@ -96,13 +93,13 @@ const styles = StyleSheet.create({
     flex: 1,
     fontFamily: 'Bold',
     alignItems: 'center',
-    paddingTop: 140,
+    paddingTop: 120,
   },
   underDiv: {
     fontFamily: 'Bold',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 80,
+    marginBottom: 50,
   },
   bottomDiv: {
     fontFamily: 'Bold',
@@ -110,7 +107,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     width: '100%',
-    height: '37%',
+    height: '44%',
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     backgroundColor: '#17181B',
@@ -123,27 +120,19 @@ const styles = StyleSheet.create({
     paddingTop: 40,
     justifyContent: 'space-between',
   },
-  bottomDivText: {
-    textAlign: 'center',
-    color: '#FFFFFF',
-    fontFamily: 'Regular',
-    fontSize: 15,
-  },
   bottomBtn: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     gap: 20,
   },
-
-
   containerBtn: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     paddingBottom: 17,
-    width: '40%',
+    width: '45%',
     paddingTop: 17,
     backgroundColor: '#E0FE10',
     gap: 10,
@@ -157,14 +146,13 @@ const styles = StyleSheet.create({
     fontFamily: 'Bold',
     fontSize: 15,
   },
-
   containerBtn2: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     paddingBottom: 17,
-    width: '40%',
+    width: '45%',
     paddingTop: 17,
     backgroundColor: '#1E1E1E',
     borderRadius: 12,
@@ -176,5 +164,5 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontFamily: 'Bold',
     fontSize: 15,
-  }
+  },
 })
