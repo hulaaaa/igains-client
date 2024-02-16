@@ -15,7 +15,7 @@ import { StatusBar } from 'expo-status-bar';
 SplashScreen.preventAutoHideAsync();
 
 export default function SplashStart() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const [fontsLoaded, fontError] = useFonts({
     'Regular': require('../../../assets/fonts/regular.otf'),
     'RegularItalic': require('../../../assets/fonts/regular-italic.otf'),
@@ -38,18 +38,19 @@ export default function SplashStart() {
     <View style={styles.container} onLayout={onLayoutRootView}>
       <Image style={styles.imgBg} alt='img' source={require('../../../assets/images/app/splash_start_img.png')} />
       <View style={styles.contantDiv}>
-        {/* Icon */}
         <View>
-          <Splash_GainsText />
+          <Splash_GainsText width={123} height={32} />
         </View>
 
-        {/* Text */}
         <View style={styles.mainContantDiv}>
           <View>
             <SplashStories />
           </View>
           <View style={styles.btnDiv}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => {
+              Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
+              navigation.navigate('Register')
+            }}>
               <View style={{
                 width: Dimensions.get('window').width - 80,
                 display: 'flex',
@@ -67,12 +68,16 @@ export default function SplashStart() {
                   color: '#FFFFFF',
                   textAlign: 'center',
                 }}>
-                  Create an account
+                  Let's go
                 </Text>
                 <Arrow color={'#FFFFFF'} />
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 5, }}>
+            <TouchableOpacity onPress={() => {
+                Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success)
+                navigation.navigate('Login') 
+              }} 
+              style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 5, }}>
               <Text style={{
                 fontFamily: 'Light',
                 fontSize: 16,

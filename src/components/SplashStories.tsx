@@ -8,6 +8,7 @@ export default function SplashStories() {
     const welcomeStories: string[] = [
         "Create Body of Your Dream%Choose from our library or create your personal trainings plans",
         "Suck Your own Dick%And improve your sucking skills, do it everywhere",
+        "Fuck My Mother Everyday%Then you can try with pretty boy and any girl from your class",
     ]
     const width = Dimensions.get('window').width - 50;
     const [changedIndex, setChangedIndex] = useState(0)
@@ -61,26 +62,26 @@ export default function SplashStories() {
                 )}
             />
             <Pagination
-            activeDotIndex={changedIndex}
-            dotsLength={welcomeStories.length}
-            inactiveDotOpacity={0.4}
-            inactiveDotScale={0.7}
-            animatedFriction={2}
-            animatedDuration={100}
-            dotStyle={{
-                width: 28,
-                height: 7,
-                borderRadius: 20,
-                marginHorizontal: -7,
-                backgroundColor: '#E0FE10'
-            }}
-            inactiveDotStyle={{
-                width: 20,
-                height: 7,
-                borderRadius: 20,
-                backgroundColor: 'rgba(255, 255, 255, 0.5)'
-            }}
-        /> 
+                activeDotIndex={changedIndex}
+                dotsLength={welcomeStories.length}
+                inactiveDotOpacity={0.4}
+                inactiveDotScale={0.7}
+                animatedFriction={2}
+                animatedDuration={100}
+                dotStyle={{
+                    width: 28,
+                    height: 7,
+                    borderRadius: 20,
+                    marginHorizontal: -6,
+                    backgroundColor: '#E0FE10'
+                }}
+                inactiveDotStyle={{
+                    width: 23,
+                    height: 11,
+                    borderRadius: 20,
+                    backgroundColor: 'rgba(255, 255, 255, 0.5)'
+                }}
+            />
         </View>
     )
 }

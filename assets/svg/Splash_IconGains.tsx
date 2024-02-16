@@ -1,7 +1,7 @@
 import * as React from "react"
 import Svg, { G, Path } from "react-native-svg"
 const Splash_IconGains = () => (
-    <Svg width={128} height={135} xmlns="http://www.w3.org/2000/svg" fill="none">
+    <Svg width={128} height={135} fill="none">
         <G opacity={0.1}>
             <Path
                 fill="#FDFDFD"
