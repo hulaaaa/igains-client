@@ -33,7 +33,7 @@ export default function SplashStart() {
   if (!fontsLoaded && !fontError) {
     return null;
   }
-
+  
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
       <Image style={styles.imgBg} alt='img' source={require('../../../assets/images/app/splash_start_img.png')} />
@@ -121,8 +121,8 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'space-between',
-    width: '100%',
-    height: '100%',
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
     paddingVertical: '25%'
   },
   mainContantDiv: {

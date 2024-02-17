@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, Dimensions, TextInput, Button, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
@@ -12,6 +12,9 @@ import Arrow from '../../../assets/svg/Arrow';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import GoogleAuthSvg from '../../../assets/svg/GoogleAuthSvg';
 import FbAuthSvg from '../../../assets/svg/FbAuthSvg';
+import InputIconName from '../../../assets/svg/InputIconName';
+import InputIconMail from '../../../assets/svg/InputIconMail';
+import InputIconPass from '../../../assets/svg/InputIconPass';
 
 interface IFormInput {
   firstName: string;
@@ -20,10 +23,8 @@ interface IFormInput {
 }
 
 export default function RegisterLayout() {
-  const widthS = Dimensions.get('window').width;
-  const heightS = Dimensions.get('window').height;
   const navigation = useNavigation();
-
+  const [isLocked, setIsLocked] = useState(true);
   const { control, handleSubmit, formState: { errors } } = useForm<IFormInput>({
     defaultValues: {
       firstName: "",
@@ -37,6 +38,8 @@ export default function RegisterLayout() {
   };
 
   return (
+
+
     <KeyboardAwareScrollView style={{ backgroundColor: '#06070A' }}>
       <View style={headerStyle.bg}>
         <SafeAreaView>
@@ -51,6 +54,7 @@ export default function RegisterLayout() {
             </View>
 
             <View style={inputsStyle.containerInput}>
+
               <Controller
                 control={control}
                 rules={{
@@ -59,23 +63,30 @@ export default function RegisterLayout() {
                 }}
                 render={({ field: { onChange, onBlur, value } }) => (
                   <View style={{ gap: 8 }}>
-                    <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-                    <Text style={inputsStyle.upperInputText}>Your name</Text>
-                    {errors.firstName && <Text style={inputsStyle.errorInput}>This is required.</Text>}
+                    <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <Text style={inputsStyle.upperInputText}>Your name</Text>
+                      {errors.firstName && <Text style={inputsStyle.errorInput}>This is required.</Text>}
                     </View>
-                    <TextInput
-                      placeholder="Enter your name"
-                      onBlur={onBlur}
-                      style={inputsStyle.inputText}
-                      placeholderTextColor={'rgba(255, 255, 255, 0.5)'}
-                      onChangeText={onChange}
-                      value={value}
-                    />
+                    <View style={inputsStyle.inputText}>
+                      <TextInput
+                        placeholder="Enter your name"
+                        onBlur={onBlur}
+                        placeholderTextColor={'rgba(255, 255, 255, 0.5)'}
+                        onChangeText={onChange}
+                        color={'#FFFFFF'}
+                        style={{
+                          width: '90%',
+                          height: 50
+                        }}
+                        value={value}></TextInput>
+                      <InputIconName color={'#FFFFFF'} />
+                    </View>
+
                   </View>
                 )}
                 name="firstName"
               />
-              
+
               <Controller
                 control={control}
                 rules={{
@@ -83,26 +94,33 @@ export default function RegisterLayout() {
                   required: true,
                   maxLength: 40,
                 }}
-                
+
                 render={({ field: { onChange, onBlur, value } }) => (
                   <View style={{ gap: 8 }}>
-                    <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                    <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                       <Text style={inputsStyle.upperInputText}>E-mail address</Text>
                       {errors.email && <Text style={inputsStyle.errorInput}>This is required.</Text>}
                     </View>
-                    <TextInput
-                      placeholder="Enter your e-mail"
-                      onBlur={onBlur}
-                      style={inputsStyle.inputText}
-                      placeholderTextColor={'rgba(255, 255, 255, 0.5)'}
-                      onChangeText={onChange}
-                      value={value}
-                    />
+                    <View style={inputsStyle.inputText}>
+                      <TextInput
+                        placeholder="Enter your e-mail"
+                        onBlur={onBlur}
+                        placeholderTextColor={'rgba(255, 255, 255, 0.5)'}
+                        color={'#FFFFFF'}
+                        style={{
+                          width: '90%',
+                          height: 50
+                        }}
+                        onChangeText={onChange}
+                        value={value}
+                      />
+                      <InputIconMail color={'#FFFFFF'} />
+                    </View>
                   </View>
                 )}
                 name="email"
               />
-              
+
 
               <Controller
                 control={control}
@@ -113,19 +131,34 @@ export default function RegisterLayout() {
                 }}
                 render={({ field: { onChange, onBlur, value } }) => (
                   <View style={{ gap: 8 }}>
-                    <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                    <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                       <Text style={inputsStyle.upperInputText}>Password</Text>
                       {errors.password && <Text style={inputsStyle.errorInput}>This is required.</Text>}
                     </View>
-                    <TextInput
-                      placeholder="Enter your password"
-                      style={inputsStyle.inputText}
-                      placeholderTextColor={'rgba(255, 255, 255, 0.5)'}
-                      onBlur={onBlur}
-                      onChangeText={onChange}
-                      value={value}
-                      secureTextEntry={true}
-                    />
+                    <View style={inputsStyle.inputText}>
+                      <TextInput
+                        placeholder="Enter your password"
+                        color={'#FFFFFF'}
+                        placeholderTextColor={'rgba(255, 255, 255, 0.5)'}
+                        onBlur={onBlur}
+                        onChangeText={onChange}
+                        value={value}
+                        style={{
+                          width: '90%',
+                          height: 50
+                        }}
+                        secureTextEntry={!isLocked}
+                      />
+                      <TouchableOpacity onPress={() => {
+                        setIsLocked(!isLocked)
+                        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
+                      }}>
+                        {
+                          !isLocked ? (<InputIconPass color={'#FFFFFF'} locked={false} />) : (<InputIconPass color={'#FFFFFF'} locked={true} />)
+                        }
+                      </TouchableOpacity>
+
+                    </View>
                   </View>
                 )}
                 name="password"
@@ -140,13 +173,11 @@ export default function RegisterLayout() {
             </View>
 
             <View style={{
-              display: 'flex', 
+              display: 'flex',
               flexDirection: 'row',
-              alignItems: 'center', 
-             
-
- justifyContent: 'center',
-              gap:20,
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 20,
               marginBottom: 30,
             }}>
               <GoogleAuthSvg />
@@ -195,7 +226,9 @@ const inputsStyle = StyleSheet.create({
   },
   inputText: {
     width: Dimensions.get('window').width - 80,
-    paddingVertical: 17,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     paddingHorizontal: 18,
     backgroundColor: '#06070A',
     borderRadius: 12,
