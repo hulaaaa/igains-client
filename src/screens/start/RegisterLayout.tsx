@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, Dimensions, TextInput, Button, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -15,7 +14,6 @@ import FbAuthSvg from '../../../assets/svg/FbAuthSvg';
 import InputIconName from '../../../assets/svg/InputIconName';
 import InputIconMail from '../../../assets/svg/InputIconMail';
 import InputIconPass from '../../../assets/svg/InputIconPass';
-
 interface IFormInput {
   firstName: string;
   email: string;
@@ -25,6 +23,16 @@ interface IFormInput {
 export default function RegisterLayout() {
   const navigation = useNavigation();
   const [isLocked, setIsLocked] = useState(true);
+  const [isFocused, setIsFocused] = useState({
+    firstName: false,
+    email: false,
+    password: false,
+  });
+  const [isFilled, setIsFilled] = useState({
+    firstName: false,
+    email: false,
+    password: false,
+  });
   const { control, handleSubmit, formState: { errors } } = useForm<IFormInput>({
     defaultValues: {
       firstName: "",
@@ -67,10 +75,14 @@ export default function RegisterLayout() {
                       <Text style={inputsStyle.upperInputText}>Your name</Text>
                       {errors.firstName && <Text style={inputsStyle.errorInput}>This is required.</Text>}
                     </View>
-                    <View style={inputsStyle.inputText}>
+                    <View style={[inputsStyle.inputText, { borderColor: isFocused.firstName ? '#E0FE10' : '#262626' }]}>
                       <TextInput
                         placeholder="Enter your name"
-                        onBlur={onBlur}
+                        onBlur={() => {
+                          setIsFocused({ ...isFocused, firstName: false });
+                          setIsFilled({ ...isFilled, firstName: !!value });
+                        }}
+                        onFocus={() => setIsFocused({ ...isFocused, firstName: true })}
                         placeholderTextColor={'rgba(255, 255, 255, 0.5)'}
                         onChangeText={onChange}
                         color={'#FFFFFF'}
@@ -79,7 +91,7 @@ export default function RegisterLayout() {
                           height: 50
                         }}
                         value={value}></TextInput>
-                      <InputIconName color={'#FFFFFF'} />
+                      <InputIconName color={isFilled.firstName ? '#FFFFFF' : 'rgba(255, 255, 255, 0.5)'} />
                     </View>
 
                   </View>
@@ -101,10 +113,14 @@ export default function RegisterLayout() {
                       <Text style={inputsStyle.upperInputText}>E-mail address</Text>
                       {errors.email && <Text style={inputsStyle.errorInput}>This is required.</Text>}
                     </View>
-                    <View style={inputsStyle.inputText}>
+                    <View style={[inputsStyle.inputText, { borderColor: isFocused.email ? '#E0FE10' : '#262626' }]}>
                       <TextInput
                         placeholder="Enter your e-mail"
-                        onBlur={onBlur}
+                        onBlur={() => {
+                          setIsFocused({ ...isFocused, email: false });
+                          setIsFilled({ ...isFilled, email: !!value });
+                        }}
+                        onFocus={() => setIsFocused({ ...isFocused, email: true })}
                         placeholderTextColor={'rgba(255, 255, 255, 0.5)'}
                         color={'#FFFFFF'}
                         style={{
@@ -114,7 +130,7 @@ export default function RegisterLayout() {
                         onChangeText={onChange}
                         value={value}
                       />
-                      <InputIconMail color={'#FFFFFF'} />
+                      <InputIconMail color={isFilled.email ? '#FFFFFF' : 'rgba(255, 255, 255, 0.5)'} />
                     </View>
                   </View>
                 )}
@@ -133,14 +149,20 @@ export default function RegisterLayout() {
                   <View style={{ gap: 8 }}>
                     <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                       <Text style={inputsStyle.upperInputText}>Password</Text>
-                      {errors.password && <Text style={inputsStyle.errorInput}>This is required.</Text>}
+                      {
+
+errors.password && <Text style={inputsStyle.errorInput}>This is required.</Text>}
                     </View>
-                    <View style={inputsStyle.inputText}>
+                    <View style={[inputsStyle.inputText, { borderColor: isFocused.password ? '#E0FE10' : '#262626' }]}>
                       <TextInput
                         placeholder="Enter your password"
                         color={'#FFFFFF'}
                         placeholderTextColor={'rgba(255, 255, 255, 0.5)'}
-                        onBlur={onBlur}
+                        onBlur={() => {
+                          setIsFocused({ ...isFocused, password: false });
+                          setIsFilled({ ...isFilled, password: !!value });
+                        }}
+                        onFocus={() => setIsFocused({ ...isFocused, password: true })}
                         onChangeText={onChange}
                         value={value}
                         style={{
@@ -154,7 +176,7 @@ export default function RegisterLayout() {
                         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
                       }}>
                         {
-                          !isLocked ? (<InputIconPass color={'#FFFFFF'} locked={false} />) : (<InputIconPass color={'#FFFFFF'} locked={true} />)
+                          !isLocked ? (<InputIconPass color={isFilled.password ? '#FFFFFF' : 'rgba(255, 255, 255, 0.5)'}  locked={false} />) : (<InputIconPass color={isFilled.password ? '#FFFFFF' : 'rgba(255, 255, 255, 0.5)'} locked={true} />)
                         }
                       </TouchableOpacity>
 
