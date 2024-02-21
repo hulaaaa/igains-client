@@ -22,7 +22,7 @@ interface IFormInput {
 
 export default function RegisterLayout() {
   const navigation = useNavigation();
-  const [isLocked, setIsLocked] = useState(true);
+  const [isLocked, setIsLocked] = useState(false);
   const [isFocused, setIsFocused] = useState({
     firstName: false,
     email: false,
@@ -149,9 +149,7 @@ export default function RegisterLayout() {
                   <View style={{ gap: 8 }}>
                     <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                       <Text style={inputsStyle.upperInputText}>Password</Text>
-                      {
-
-errors.password && <Text style={inputsStyle.errorInput}>This is required.</Text>}
+                      {errors.password && <Text style={inputsStyle.errorInput}>This is required.</Text>}
                     </View>
                     <View style={[inputsStyle.inputText, { borderColor: isFocused.password ? '#E0FE10' : '#262626' }]}>
                       <TextInput
@@ -169,6 +167,7 @@ errors.password && <Text style={inputsStyle.errorInput}>This is required.</Text>
                           width: '90%',
                           height: 50
                         }}
+                        
                         secureTextEntry={!isLocked}
                       />
                       <TouchableOpacity onPress={() => {
@@ -202,8 +201,12 @@ errors.password && <Text style={inputsStyle.errorInput}>This is required.</Text>
               gap: 20,
               marginBottom: 30,
             }}>
-              <GoogleAuthSvg />
-              <FbAuthSvg />
+              <TouchableOpacity>
+                <GoogleAuthSvg />
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <FbAuthSvg />
+              </TouchableOpacity>
             </View>
 
             {/* Create acc */}
