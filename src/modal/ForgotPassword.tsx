@@ -127,6 +127,7 @@ export default function ForgotPassword() {
                   <View style={{ gap: 8 }}>
                     <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                       <Text style={inputsStyle.upperInputText}>Password</Text>
+                      {errors.password && <Text style={inputsStyle.errorInput}>Enter valid password</Text>}
                     </View>
                     <View style={[inputsStyle.inputText, { borderColor: isFocused.password ? '#E0FE10' : '#262626' }]}>
                       <TextInput
@@ -168,11 +169,12 @@ export default function ForgotPassword() {
                   minLength: 8,
                   required: true,
                   maxLength: 40,
+                  validate: (value) => value == value.password,
                 }}
                 render={({ field: { onChange, onBlur, value } }) => (
                   <View style={{ gap: 8 }}>
                     <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-
+                    {errors.repassword && <Text style={inputsStyle.errorInput}>Enter again password</Text>}
                     </View>
                     <View style={[inputsStyle.inputText, { borderColor: isFocused.repassword ? '#E0FE10' : '#262626' }]}>
                       <TextInput
