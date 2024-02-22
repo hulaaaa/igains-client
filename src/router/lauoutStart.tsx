@@ -9,13 +9,9 @@ const Stack = createNativeStackNavigator()
 export default function StartRouterStack() {
   return (
     <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
-      <Stack.Screen options={{animation: 'fade', animationDuration: 400}} name="Start" component={SplashStart} />
-      <Stack.Screen options={{ animation: 'fade', animationDuration: 400}} name="Register" component={RegisterLayout} />
-      <Stack.Screen options={{ animation: 'fade', animationDuration: 400}} name="Login" component={LoginLayout} />
-
-      {/* <Stack.Screen options={{animation: 'fade', gestureEnabled: false}} name="Start" component={SplashStart} />
-      <Stack.Screen options={{ animation: 'fade', gestureEnabled: false}} name="Register" component={RegisterLayout} />
-      <Stack.Screen options={{ animation: 'fade', gestureEnabled: false}} name="Login" component={LoginLayout} /> */}
+      <Stack.Screen options={{animation: 'fade',gestureEnabled: false, animationDuration: 400}} name="Start" component={SplashStart} />
+      <Stack.Screen options={{ animation: 'fade',animationDuration: 400}} name="Register" component={RegisterLayout} />
+      <Stack.Screen options={{ animation: 'fade',animationDuration: 400}} name="Login" component={LoginLayout} />
     </Stack.Navigator>
   )
 }

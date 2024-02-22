@@ -15,7 +15,7 @@ import InputIconPass from '../../../assets/svg/InputIconPass';
 import CloseSvg from '../../../assets/svg/CloseSvg';
 import ForgotPassword from '../../modal/ForgotPassword';
 import { useStore } from '../../services/ZustandModalPassword';
-
+import Toast from 'react-native-toast-message';
 interface IFormInput {
   email: string;
   password: string;
@@ -42,8 +42,25 @@ export default function LoginLayout() {
     },
   });
 
+  
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    console.log(`Login profile: ${data}`);
+    if(data) {
+      console.log(`Login profile: ${data}`);
+      Toast.show({
+        type: 'success',
+        visibilityTime: 4000,
+        text1: 'Welcome back!',
+        text2: 'Let\'s training! 🏋️'
+      });
+    } 
+    if(data.email == 'huladm@wsb'){
+      Toast.show({
+        type: 'error',
+        visibilityTime: 4000,
+        text1: '404!',
+        text2: 'This account does not exist. ⛔️'
+      });
+    }
   };
 
   return (
@@ -180,33 +197,35 @@ export default function LoginLayout() {
               </TouchableOpacity>
             </View>
 
-            {/* Create acc */}
-            <TouchableOpacity onPress={() => {
-              Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-              handleSubmit(onSubmit)();
-            }}>
-              <View style={{
-                width: Dimensions.get('window').width - 80,
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: 10,
-                paddingVertical: 20,
-                backgroundColor: '#1E1E1E',
-                borderRadius: 15,
-              }}>
-                <Text style={{
-                  fontFamily: 'Bold',
-                  fontSize: 17,
-                  color: '#FFFFFF',
-                  textAlign: 'center',
+            <View>
+              <TouchableOpacity
+                onPress={() => {
+                  Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+                  handleSubmit(onSubmit)();
                 }}>
-                  Log in
-                </Text>
-                <Arrow color={'#FFFFFF'} />
-              </View>
-            </TouchableOpacity>
+                <View style={{
+                  width: Dimensions.get('window').width - 80,
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: 10,
+                  paddingVertical: 20,
+                  backgroundColor: '#1E1E1E',
+                  borderRadius: 15,
+                }}>
+                  <Text style={{
+                    fontFamily: 'Bold',
+                    fontSize: 17,
+                    color: '#FFFFFF',
+                    textAlign: 'center',
+                  }}>
+                    Log in
+                  </Text>
+                  <Arrow color={'#FFFFFF'} />
+                </View>
+              </TouchableOpacity>
+            </View>
           </View>
         </SafeAreaView>
         <StatusBar style="light" />

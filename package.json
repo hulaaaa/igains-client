@@ -40,6 +40,7 @@
     "react-native-snap-carousel": "^3.9.1",
     "react-native-story-view": "^1.0.0",
     "react-native-svg": "14.1.0",
+    "react-native-toast-message": "^2.2.0",
     "react-native-video": "^5.2.1",
     "react-native-video-cache-control": "^1.2.2",
     "styled-components": "^6.1.8",

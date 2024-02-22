@@ -7,6 +7,7 @@ import InputIconMail from '../../assets/svg/InputIconMail';
 import InputIconPass from '../../assets/svg/InputIconPass';
 import Arrow from '../../assets/svg/Arrow';
 import { useStore } from '../services/ZustandModalPassword';
+import Toast from 'react-native-toast-message';
 interface IFormInput {
   email: string;
   password: string;
@@ -30,6 +31,7 @@ export default function ForgotPassword() {
     password: false,
     repassword: false,
   });
+  const [validRepeat, setValidRepeat] = useState(true);
   const { control, handleSubmit, formState: { errors } } = useForm<IFormInput>({
     defaultValues: {
       email: "",
@@ -38,11 +40,30 @@ export default function ForgotPassword() {
     },
   });
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    console.log(`Reset password: ${JSON.stringify(data)}`);
-    // setTimeout(()=>{
-    //   setModalVisible(!modalVisible)
-    // },1500)
-    setModalVisible()
+    if(data.email !== "admin@wsb.pl" ){
+      if (data.password == data.repassword) {
+        setValidRepeat(true);
+        console.log(`Reset password: ${JSON.stringify(data)}`);
+        Toast.show({
+          type: 'success',
+          visibilityTime: 4000,
+          text1: 'Check your inbox!',
+          text2: 'We are send link to your inbox. 📨'
+        });
+        setTimeout(() => {
+          setModalVisible()
+        }, 700)
+      } else {
+        setValidRepeat(false);
+      }
+    }else{
+      Toast.show({
+        type: 'error',
+        visibilityTime: 4000,
+        text1: '404!',
+        text2: 'This account does not exist. ⛔️'
+      });
+    }
   };
 
   return (
@@ -115,7 +136,7 @@ export default function ForgotPassword() {
               )}
               name="email"
             />
-            <View>
+            <View style={{ gap: 7 }}>
               <Controller
                 control={control}
                 rules={{
@@ -169,12 +190,11 @@ export default function ForgotPassword() {
                   minLength: 8,
                   required: true,
                   maxLength: 40,
-                  validate: (value) => value == value.password,
                 }}
                 render={({ field: { onChange, onBlur, value } }) => (
                   <View style={{ gap: 8 }}>
                     <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                    {errors.repassword && <Text style={inputsStyle.errorInput}>Enter again password</Text>}
+                      {!validRepeat && <Text style={inputsStyle.errorInput}>Repeat your password </Text>}
                     </View>
                     <View style={[inputsStyle.inputText, { borderColor: isFocused.repassword ? '#E0FE10' : '#262626' }]}>
                       <TextInput
@@ -200,7 +220,7 @@ export default function ForgotPassword() {
                         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)
                       }}>
                         {
-                          !isLocked ? (<InputIconPass color={isFilled.repassword ? '#FFFFFF' : 'rgba(255, 255, 255, 0.5)'} locked={false} />) : (<InputIconPass color={isFilled.password ? '#FFFFFF' : 'rgba(255, 255, 255, 0.5)'} locked={true} />)
+                          !isLocked ? (<InputIconPass color={isFilled.repassword ? '#FFFFFF' : 'rgba(255, 255, 255, 0.5)'} locked={false} />) : (<InputIconPass color={isFilled.repassword ? '#FFFFFF' : 'rgba(255, 255, 255, 0.5)'} locked={true} />)
                         }
                       </TouchableOpacity>
 
@@ -211,31 +231,33 @@ export default function ForgotPassword() {
               />
 
             </View>
-            <TouchableOpacity onPress={() => {
-              Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-              handleSubmit(onSubmit)();
-            }}>
-              <View style={{
-                width: Dimensions.get('window').width - 110,
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: 10,
-                paddingVertical: 20,
-                backgroundColor: '#E0FE10',
-                borderRadius: 15,
+            <View style={{marginTop: 20}}>
+              <TouchableOpacity onPress={() => {
+                Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+                handleSubmit(onSubmit)();
               }}>
-                <Text style={{
-                  fontFamily: 'Bold',
-                  fontSize: 17,
-                  color: '#17181B',
-                  textAlign: 'center',
+                <View style={{
+                  width: Dimensions.get('window').width - 110,
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: 10,
+                  paddingVertical: 20,
+                  backgroundColor: '#E0FE10',
+                  borderRadius: 15,
                 }}>
-                  Reset Password
-                </Text>
-              </View>
-            </TouchableOpacity>
+                  <Text style={{
+                    fontFamily: 'Bold',
+                    fontSize: 17,
+                    color: '#17181B',
+                    textAlign: 'center',
+                  }}>
+                    Reset Password
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
       </View>
