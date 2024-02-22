@@ -14,6 +14,7 @@ import FbAuthSvg from '../../../assets/svg/FbAuthSvg';
 import InputIconName from '../../../assets/svg/InputIconName';
 import InputIconMail from '../../../assets/svg/InputIconMail';
 import InputIconPass from '../../../assets/svg/InputIconPass';
+import Toast from 'react-native-toast-message';
 interface IFormInput {
   firstName: string;
   email: string;
@@ -42,7 +43,13 @@ export default function RegisterLayout() {
   });
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    console.log(data);
+    Toast.show({
+      type: 'success',
+      visibilityTime: 4000,
+      text1: `Welcome in our Family, ${data.firstName}!`,
+      text2: 'Let\'s training! 🏋️'
+    });
+    console.log(`Register: ${data}`);
   };
 
   return (

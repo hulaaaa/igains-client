@@ -43,7 +43,7 @@ export default function App() {
     SplashScreen.hideAsync();
   }, []);
 
-  const isAuth = true;
+  const isAuth = false;
 
   return (
     <NavigationContainer >
