@@ -36,8 +36,6 @@ export default function Tabs() {
         return null;
     }
     
-
-
     return (
         <View style={styles.container} onLayout={onLayoutRootView}>
             <TouchableOpacity style={styles.tabsBtn} onPress={() => { navigation.navigate("Home") }}>                
@@ -103,6 +101,7 @@ export default function Tabs() {
         </View>
     )
 }
+
 const styles = StyleSheet.create({
     container: {
         position: 'absolute',
