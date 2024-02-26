@@ -56,6 +56,12 @@ export default function Home() {
           <FavExercises />
         </View>
 
+        {/* TRAINING COURSES */}
+        <View style={styles.divtasks}>
+          <Text style={{ fontFamily: 'Regular', fontSize: 21, color: 'white', }}>Training courses 💪🏻</Text>
+          
+        </View>
+
       </SafeAreaView>
       <Tabs />
     </View>
