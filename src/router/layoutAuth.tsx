@@ -15,5 +15,4 @@ function MainRouterStack() {
     </Stack.Navigator>
   )
 }
-
 export default MainRouterStack
