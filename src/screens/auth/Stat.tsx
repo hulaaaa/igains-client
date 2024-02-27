@@ -1,3 +1,4 @@
+import { VictoryBar } from 'victory';
 import { Dimensions, RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import Tabs from '../../components/Tabs'
@@ -17,7 +18,12 @@ SplashScreen.preventAutoHideAsync();
 export default function Stat() {
   const [refreshing, setRefreshing] = useState(false);
   const [activeToday, setActiveToday] = useState('Today')
-
+  const data = [
+    {quarter: 1, earnings: 13000},
+    {quarter: 2, earnings: 16500},
+    {quarter: 3, earnings: 14250},
+    {quarter: 4, earnings: 19000}
+  ];
   const [fontsLoaded, fontError] = useFonts({
     'Regular': require('../../../assets/fonts/regular.otf'),
     'RegularItalic': require('../../../assets/fonts/regular-italic.otf'),
@@ -182,6 +188,16 @@ export default function Stat() {
                 </Text>
               </View>
             </View>
+          </View>
+
+          {/* CHART STAT */}
+          <View>
+            <VictoryBar
+              data={data}
+              style={{ data: { fill: "#c43a31" } }}
+              x={"quarter"}
+              y={"earnings"}
+            />
           </View>
 
 

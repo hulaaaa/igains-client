@@ -52,6 +52,7 @@
     "react-native-video-cache-control": "^1.2.2",
     "react-native-web": "~0.19.6",
     "styled-components": "^6.1.8",
+    "victory": "^36.9.1",
     "yarn": "^1.22.21",
     "zustand": "^4.5.1"
   },
