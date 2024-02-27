@@ -64,8 +64,6 @@ export default function LoginLayout() {
   };
 
   return (
-
-
     <KeyboardAwareScrollView style={{ backgroundColor: '#06070A' }}>
       <View style={headerStyle.bg}>
         <Modal

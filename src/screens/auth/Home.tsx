@@ -9,11 +9,14 @@ import HeaderText from '../../components/HeaderText';
 import SearchBar from '../../components/SearchBar';
 import TasksTodayHome from '../../components/TasksTodayHome';
 import FavExercises from '../../components/FavExercises';
+import { StatusBar } from 'expo-status-bar';
+import TrainingCourse from '../../components/TrainingCourse';
 
 SplashScreen.preventAutoHideAsync();
 
 
 export default function Home() {
+  const [progress, setProgress] = useState(0.5);
   const [fontsLoaded, fontError] = useFonts({
     'Regular': require('../../../assets/fonts/regular.otf'),
     'RegularItalic': require('../../../assets/fonts/regular-italic.otf'),
@@ -32,12 +35,11 @@ export default function Home() {
   if (!fontsLoaded && !fontError) {
     return null;
   }
-  const [progress, setProgress] = useState(0.5);
 
 
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
-      <SafeAreaView>
+      <SafeAreaView >
         {/* HEADER and SEARCH BAR */}
         <View style={styles.header_search}>
           <HeaderText second={false} />
@@ -59,11 +61,11 @@ export default function Home() {
         {/* TRAINING COURSES */}
         <View style={styles.divtasks}>
           <Text style={{ fontFamily: 'Regular', fontSize: 21, color: 'white', }}>Training courses 💪🏻</Text>
-          
+          <TrainingCourse/>
         </View>
-
       </SafeAreaView>
       <Tabs />
+      <StatusBar style="light" />
     </View>
   )
 }
@@ -86,7 +88,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     gap: 25,
-    marginTop: 25,
+    marginTop: 20,
     width: Dimensions.get('window').width - 50,
   },
   divtasks: {
@@ -94,7 +96,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'flex-start',
     gap: 15,
-    marginTop: 25,
+    marginTop: 20,
     width: Dimensions.get('window').width - 50,
   },
 
