@@ -1,13 +1,13 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 
-export default function HeaderText({second}:any) {
+export default function HeaderText({first,second}:any) {
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>Hello, Dmytro 👋🏻</Text>
-            <View>
+            <Text style={styles.text}>{first}</Text>
+            <TouchableOpacity style={{padding: 10,}}>
                 {second}
-            </View>
+            </TouchableOpacity>
         </View>
     )
 }

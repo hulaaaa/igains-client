@@ -1,12 +1,9 @@
 import { Image, ScrollView, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect } from 'react'
-import DoneIcon from '../../assets/svg/DoneIcon';
-import GymIcon from '../../assets/svg/SportIcon/GymIcon';
-import RunningIcon from '../../assets/svg/SportIcon/RunningIcon';
-import SwimmingIcon from '../../assets/svg/SportIcon/SwimmingIcon';
+
 interface Task {
     title: string;
-    image: any,
+    image: any;
     isNew: boolean;
 }
 
@@ -40,7 +37,7 @@ export default function TrainingCourse() {
     ]
 
     return (
-      <ScrollView pagingEnabled={true} showsHorizontalScrollIndicator={true} showsVerticalScrollIndicator={false} horizontal={true} style={styles.container}>
+      <ScrollView pagingEnabled={true} showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false} horizontal={true} style={styles.container}>
         {
             tasks.map((item, index) => {
                 return (

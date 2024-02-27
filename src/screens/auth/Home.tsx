@@ -1,4 +1,4 @@
-import { Button, Dimensions, SafeAreaView, StyleSheet, Text, View } from 'react-native'
+import { Button, Dimensions, RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
 import Tabs from '../../components/Tabs'
 import { useCallback } from 'react';
@@ -16,6 +16,8 @@ SplashScreen.preventAutoHideAsync();
 
 
 export default function Home() {
+  const [refreshing, setRefreshing] = useState(false);
+
   const [progress, setProgress] = useState(0.5);
   const [fontsLoaded, fontError] = useFonts({
     'Regular': require('../../../assets/fonts/regular.otf'),
@@ -35,34 +37,50 @@ export default function Home() {
   if (!fontsLoaded && !fontError) {
     return null;
   }
-
+  const onRefresh = () => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 800);
+};
 
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
       <SafeAreaView >
+      <ScrollView
+        refreshControl={
+          <RefreshControl
+            tintColor={'#E0FE10'}
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        } showsVerticalScrollIndicator={false}>
         {/* HEADER and SEARCH BAR */}
         <View style={styles.header_search}>
-          <HeaderText second={false} />
+          <HeaderText first="Hello, Dmytro 👋🏻" second={false} />
           <SearchBar />
         </View>
 
-        {/* TASKS for TODAY */}
-        <View style={styles.divtasks}>
-          <Text style={{ fontFamily: 'Regular', fontSize: 21, color: 'white', }}>Tasks for Today 🔥</Text>
-          <TasksTodayHome />
-        </View>
+        
+          {/* TASKS for TODAY */}
+          <View style={styles.divtasks}>
+            <Text style={{ fontFamily: 'Regular', fontSize: 21, color: 'white', }}>Tasks for Today 🔥</Text>
+            <TasksTodayHome />
+          </View>
 
-        {/* FAVORITE EXERCISES */}
-        <View style={styles.divtasks}>
-          <Text style={{ fontFamily: 'Regular', fontSize: 21, color: 'white', }}>Favourite Exercises ❤️</Text>
-          <FavExercises />
-        </View>
+          {/* FAVORITE EXERCISES */}
+          <View style={styles.divtasks}>
+            <Text style={{ fontFamily: 'Regular', fontSize: 21, color: 'white', }}>Favourite Exercises ❤️</Text>
+            <FavExercises />
+          </View>
 
-        {/* TRAINING COURSES */}
-        <View style={styles.divtasks}>
-          <Text style={{ fontFamily: 'Regular', fontSize: 21, color: 'white', }}>Training courses 💪🏻</Text>
-          <TrainingCourse/>
-        </View>
+          {/* TRAINING COURSES */}
+          <View style={styles.divtasks}>
+            <Text style={{ fontFamily: 'Regular', fontSize: 21, color: 'white', }}>Training courses 💪🏻</Text>
+            <TrainingCourse/>
+          </View>
+
+        </ScrollView>
       </SafeAreaView>
       <Tabs />
       <StatusBar style="light" />
