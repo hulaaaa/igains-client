@@ -1,5 +1,5 @@
-import { VictoryBar } from 'victory';
-import { Dimensions, RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { BarChart } from "react-native-gifted-charts";
+import { Alert, Dimensions, RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import Tabs from '../../components/Tabs'
 import { useCallback } from 'react';
@@ -12,18 +12,32 @@ import * as Haptics from 'expo-haptics';
 import CalBurnIcon from '../../../assets/svg/CalBurnIcon';
 import SpendTimIcon from '../../../assets/svg/SpendTimIcon';
 import TotalTrainIcon from '../../../assets/svg/TotalTrainIcon';
+import StillDayIcon from "../../../assets/svg/StillDayIcon";
+import JustArrow from "../../../assets/svg/JustArrow";
+import { useNavigation } from "@react-navigation/native";
+import RecentActiv from "../../components/RecentActiv";
+import RunningIcon from "../../../assets/svg/SportIcon/RunningIcon";
+import SwimmingIcon from "../../../assets/svg/SportIcon/SwimmingIcon";
+import GymIcon from "../../../assets/svg/SportIcon/GymIcon";
 
 SplashScreen.preventAutoHideAsync();
 
 export default function Stat() {
   const [refreshing, setRefreshing] = useState(false);
-  const [activeToday, setActiveToday] = useState('Today')
-  const data = [
-    {quarter: 1, earnings: 13000},
-    {quarter: 2, earnings: 16500},
-    {quarter: 3, earnings: 14250},
-    {quarter: 4, earnings: 19000}
+  const unActiveColor = '#4F4F4F'
+  const activeColor = '#DFFD10'
+  const futureColor = 'white'
+  let barData = [
+    {value: 250, label: 'Mon', fontColor: unActiveColor},
+    {value: 500, label: 'Tue', frontColor: unActiveColor},
+    {value: 745, label: 'Wed', frontColor: unActiveColor},
+    {value: 320, label: 'Thu', frontColor: activeColor},
+    {value: 50, label: 'Fri', frontColor: futureColor},
+    {value: 50, label: 'Sat', frontColor: futureColor},
+    {value: 50, label: 'Sun', frontColor: futureColor},
   ];
+  const [chartData, setChartData] = useState(barData)
+  const [activeToday, setActiveToday] = useState('Today')
   const [fontsLoaded, fontError] = useFonts({
     'Regular': require('../../../assets/fonts/regular.otf'),
     'RegularItalic': require('../../../assets/fonts/regular-italic.otf'),
@@ -46,6 +60,9 @@ export default function Stat() {
       setRefreshing(false);
     }, 800);
   };
+  
+  const navigation = useNavigation();
+
 
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
@@ -191,14 +208,129 @@ export default function Stat() {
           </View>
 
           {/* CHART STAT */}
-          <View>
-            <VictoryBar
-              data={data}
-              style={{ data: { fill: "#c43a31" } }}
-              x={"quarter"}
-              y={"earnings"}
-            />
+          <View style={styles.chartDiv}>
+            <View style={{alignItems: 'center', width:'100%',flexDirection:'row',justifyContent:'space-between'}}>
+              <Text style={{
+                fontFamily:'Bold',
+                color: 'white',
+                fontSize: 20,
+              }}>
+                CALORIES
+              </Text>
+              <View>
+                <Text style={{
+                  fontFamily:'Light',
+                  color: 'white',
+                  fontSize: 15,
+                }}>
+                  DAILY AVERAGE
+                </Text>
+                <Text style={{
+                  fontFamily:'Bold',
+                  color: 'white',
+                  fontSize: 20,
+                }}>
+                  1.105 KCAL
+                </Text>
+              </View>
+            </View>
+            <View>
+              <BarChart
+                onPress={(item:any) => {
+                  Alert.alert('BarChart', JSON.stringify(item.frontColor))
+                }}
+                disablePress={false}
+                hideYAxisText={true}
+                barWidth={30}
+                yAxisTextStyle={{color: 'transparent', fontFamily: 'Light', fontSize: 1}}
+                xAxisLabelTextStyle={{color: 'white', fontFamily: 'Light', fontSize: 12}}
+                color={'white'}
+                barBorderRadius={6}
+                isAnimated
+                maxValue={1000}
+                frontColor="#4F4F4F"
+                data={chartData}
+                hideRules
+                initialSpacing={0}
+                spacing={12}
+                height={120}
+                yAxisThickness={0}
+                xAxisThickness={0}
+              />
+            </View>
           </View>
+
+          {/* STILL TASKS */}
+          <TouchableOpacity 
+            onPress={()=>{Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium),navigation.navigate("Planer") }}
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'flex-start',
+              justifyContent: 'space-between',
+              marginTop: 7,
+              width: Dimensions.get('window').width - 50,
+              borderRadius: 10,
+              padding: 15,
+              backgroundColor: '#17181B'
+            }}
+          >
+            <View style={{flexDirection:'row',alignItems:'center', gap:10}}>
+              <StillDayIcon />
+              <Text style={{
+                fontFamily:'Light',
+                fontSize: 14,
+                color: 'white',
+              }}>
+                You have still 4 daily tasks
+              </Text>
+            </View>
+            <JustArrow/>
+            
+          </TouchableOpacity>
+
+          {/* RECENTLY TRAIN */}
+          <View style={{
+            display: 'flex',
+            width: Dimensions.get('window').width - 50,
+            flexDirection:'row',
+            alignItems:'center',
+            marginTop: 15,
+            marginBottom: 15,
+            justifyContent:'space-between',
+          }}>
+            <Text style={{
+              fontFamily:'Regular',
+              fontSize: 20,
+              color: 'white',
+            }}>
+              Recent Activities
+            </Text>
+            <TouchableOpacity style={{padding: 15,paddingRight: 0}}>
+              <Text style={{
+              fontFamily:'Regular',
+              fontSize: 12,
+              color: 'rgba(255,255,255,0.5)',
+            }}>
+              View All
+            </Text>
+            </TouchableOpacity>
+          </View>
+          <View style={{
+            flexDirection: 'column',
+            width: Dimensions.get('window').width - 50,
+            gap: 10,
+            marginBottom: 70,
+          }}>
+            <RecentActiv icon={<RunningIcon/>} title="Running" kcal={450} min={120} time="Sun, 06:00 - 08:00"/>
+            <RecentActiv icon={<SwimmingIcon/>} title="Swimming " kcal={123} min={30} time="Sun, 06:00 - 08:00"/>
+            <RecentActiv icon={<GymIcon/>} title="Gym" kcal={354} min={120} time="Sun, 06:00 - 08:00"/>
+            <RecentActiv icon={<RunningIcon/>} title="Running" kcal={120} min={60} time="Mon, 06:00 - 08:00"/>
+          </View>
+
+
+
+
 
 
         </ScrollView>
@@ -239,5 +371,16 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginTop: 10,
     width: Dimensions.get('window').width - 50,
+  },
+  chartDiv: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+    marginTop: 7,
+    width: Dimensions.get('window').width - 50,
+    borderRadius: 10,
+    padding: 15,
+    backgroundColor: '#17181B'
   }
 })
