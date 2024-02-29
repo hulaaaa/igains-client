@@ -2,7 +2,7 @@
   "expo": {
     "name": "igains-client",
     "slug": "igains-client",
-    "version": "1.0.0",
+    "version": "2.0",
     "orientation": "portrait",
     "icon": "./assets/images/system/icon.png",
     "userInterfaceStyle": "dark",
@@ -15,7 +15,6 @@
       "**/*"
     ],
     "ios": {
-      "buildNumber": "1",
       "supportsTablet": true,
       "bundleIdentifier": "com.hulaaaa.igainsclient",
       "infoPlist": {
@@ -52,7 +51,7 @@
       }
     },
     "runtimeVersion": {
-      "policy": "appVersion"
+      "policy": "2.0"
     },
     "updates": {
       "url": "https://u.expo.dev/3049a2d5-f865-491f-9415-409d8680b2a7"
