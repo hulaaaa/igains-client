@@ -19,12 +19,16 @@
       "bundleIdentifier": "com.hulaaaa.igainsclient",
       "infoPlist": {
         "UIViewControllerBasedStatusBarAppearance": true
-      }
+      },
+      "runtimeVersion": "1.0.0"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/system/adaptive-icon.png",
         "backgroundColor": "#06070A"
+      },
+      "runtimeVersion": {
+        "policy": "appVersion"
       }
     },
     "web": {
