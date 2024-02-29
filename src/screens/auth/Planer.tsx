@@ -1,7 +1,7 @@
 import * as Haptics from 'expo-haptics';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import moment from 'moment';
-import { Alert, Dimensions, RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native'
+import { Alert, Dimensions, Modal, RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import Tabs from '../../components/Tabs'
 import { useCallback } from 'react';
@@ -12,6 +12,9 @@ import HeaderText from '../../components/HeaderText';
 import { StatusBar } from 'expo-status-bar';
 import GymIcon from '../../../assets/svg/SportIcon/GymIcon';
 import { Path, Svg } from 'react-native-svg';
+import AddNewExercise from '../../modal/Planer/AddNewExercise';
+import { useNavigation } from '@react-navigation/native';
+import { useStore } from '../../services/ZustandModalPassword';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -248,11 +251,22 @@ const renderHiddenItem = (data, rowMap) => (
         </TouchableOpacity>
     </View>
 );
+  const navigation = useNavigation();
+  const modalVisible = useStore(state => state.visibleModal);
+  const setModalVisible = useStore(state => state.voidVisibleModal);
 
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
+      <Modal
+          animationType="fade"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={setModalVisible}
+        >
+          <AddNewExercise />
+        </Modal>
       <SafeAreaView>
-        <View >
+        <View style={!modalVisible?{ opacity: 1}:{ opacity: 0.15}}>
           {/* HEADER */}
           <View style={styles.header_search}>
             <HeaderText first="Calendar" second={null} />
@@ -401,7 +415,7 @@ const renderHiddenItem = (data, rowMap) => (
           </ScrollView>
 
           {/* ADD EXER BTN */}
-          <TouchableOpacity style={{top: 620,position: 'absolute'}}>
+          <TouchableOpacity onPress={()=>{setModalVisible(!modalVisible)}} style={{top: 620,position: 'absolute'}}>
             <View style={styles.botBtn}>
               <Text style={{
                 color: '#17181B',
