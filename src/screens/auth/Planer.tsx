@@ -1,5 +1,7 @@
+import * as Haptics from 'expo-haptics';
+import { SwipeListView } from 'react-native-swipe-list-view';
 import moment from 'moment';
-import { Alert, Dimensions, RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, Dimensions, RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import Tabs from '../../components/Tabs'
 import { useCallback } from 'react';
@@ -77,6 +79,8 @@ export default function Planer() {
         }),
       })
   }
+  console.log(calendarData);
+  
   for(let j = 0; j < 3; j++){
     calendarDataMonth.push({
       month: moment().add(j, 'month').calendar({
@@ -90,12 +94,165 @@ export default function Planer() {
     })
   }
   const [selectedMonth, setSelectedMonth] = useState(calendarDataMonth[selectI].month)
+  const [listData, setListData] = useState(
+    Array(20)
+        .fill('')
+        .map((_, i) => ({ key: `${i}`, text: `item #${i}` }))
+);
 
+const closeRow = (rowMap, rowKey) => {
+    if (rowMap[rowKey]) {
+        rowMap[rowKey].closeRow();
+    }
+};
+
+const deleteRow = (rowMap, rowKey) => {
+    closeRow(rowMap, rowKey);
+    const newData = [...listData];
+    const prevIndex = listData.findIndex(item => item.key === rowKey);
+    newData.splice(prevIndex, 1);
+    setListData(newData);
+};
+
+const onRowDidOpen = rowKey => {
+  // Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
+  console.log('This row opened', rowKey);
+};
+
+const renderItem = data => (
+    <TouchableHighlight
+        onPress={() => console.log('You touched me')}
+        style={styles.rowFront}
+        underlayColor={'#8B8B8D'}
+    >
+        <View style={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          gap: 15
+        }}>
+          {/* TEXT TIME DIV */}
+          <View>
+            <Text style={{
+              color: '#FFFFFF',
+              fontFamily: 'Light',
+              fontSize: 15,
+            }}>
+              10:00
+            </Text>
+            <Text style={{
+              color: '#FFFFFF',
+              fontFamily: 'Bold',
+              fontSize: 15,
+            }}>
+              -
+            </Text>
+            <Text style={{
+              color: '#FFFFFF',
+              fontFamily: 'Light',
+              fontSize: 15,
+            }}>
+              12:00
+            </Text>
+          </View>
+
+          {/* Vertical Green Line */}
+          <View style={{ height: '100%', width: 1, borderRadius:5, backgroundColor: '#E0FE10' }}></View>
+
+          {/* ACTIVE DIV */}
+          <View>
+            <Text style={{
+              color: '#FFFFFF',
+              fontFamily: 'Bold',
+              fontSize: 16,
+            }}>
+              Cardio Session
+            </Text>
+            <View>
+              <Text style={{
+                color: 'rgba(255,255,255,0.5)',
+                fontFamily: 'Regular',
+                fontSize: 14,
+              }}>
+                1 time - 30 min
+              </Text>
+              <Text style={{
+                color: '#E0FE10',
+                fontFamily: 'Light',
+                fontSize: 12,
+              }}>
+                Break: 15 min
+              </Text>
+            </View>
+          </View>
+          </View>
+
+          
+    </TouchableHighlight>
+);
+
+const renderHiddenItem = (data, rowMap) => (
+    <View style={styles.rowBack}>
+        <Text style={{color: 'transparent'}}>Left</Text>
+        {/* DONE BTN */}
+        <TouchableOpacity
+            style={[styles.backRightBtn, styles.backRightBtnLeft]}
+            onPress={() => closeRow(rowMap, data.item.key)}
+        >
+            <Svg width={16} height={13} fill="none">
+            <Path
+              stroke="#64C747"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="m1 7.527 4 4.21 9.5-10"
+            />
+          </Svg>
+        </TouchableOpacity>
+
+        {/* DELETE BTN */}
+        <TouchableOpacity
+            style={[styles.backRightBtn, styles.backRightBtnRight]}
+        >
+            <Svg width={19} height={20} fill="none">
+              <Path
+                stroke="#DF3525"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={1.5}
+                d="M1.326 5.817c5.28-2.479 11.067-2.479 16.348 0"
+              />
+              <Path
+                stroke="#DF3525"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={1.5}
+                d="M5.868 3.958c0-.74.383-1.45 1.064-1.972.681-.523 1.606-.817 2.569-.817.963 0 1.888.294 2.569.817.681.523 1.064 1.232 1.064 1.972M9.5 10.465v4.648M15.857 7.676l-.609 7.437a4.165 4.165 0 0 1-1.276 2.623 3.984 3.984 0 0 1-2.656 1.095H7.683a3.984 3.984 0 0 1-2.656-1.095 4.164 4.164 0 0 1-1.277-2.623l-.608-7.437"
+              />
+            </Svg>
+        </TouchableOpacity>
+
+        {/* EDIT BTN */}
+        <TouchableOpacity
+            style={[styles.backRightBtn, styles.backDelBtnRight]}
+        >
+            <Svg width={17} height={18} fill="none">
+              <Path
+                fill="#fff"
+                fillOpacity={0.5}
+                fillRule="evenodd"
+                d="M16.115.938a2.462 2.462 0 0 0-3.576 0L11.124 2.41 4.46 9.332a.885.885 0 0 0-.222.406l-.843 3.503a.899.899 0 0 0 .222.831c.21.218.513.305.8.23l3.371-.875a.836.836 0 0 0 .392-.23l6.614-6.872 1.464-1.522a2.7 2.7 0 0 0 0-3.714l-.144-.15ZM13.73 2.177a.82.82 0 0 1 1.192 0l.145.15a.9.9 0 0 1 0 1.238l-.857.89L12.9 3.04l.83-.863Zm-2.023 2.102 1.31 1.415-5.864 6.093-1.782.463.446-1.851 5.89-6.12ZM1.686 5.573c0-.484.377-.876.842-.876h4.214c.466 0 .843-.392.843-.875 0-.484-.377-.876-.843-.876H2.528C1.132 2.946 0 4.122 0 5.573v9.631c0 1.451 1.132 2.627 2.528 2.627h9.27c1.397 0 2.53-1.176 2.53-2.627v-4.378c0-.483-.378-.875-.844-.875-.465 0-.842.392-.842.875v4.378c0 .484-.378.876-.843.876h-9.27c-.466 0-.843-.392-.843-.875V5.572Z"
+                clipRule="evenodd"
+              />
+            </Svg>
+        </TouchableOpacity>
+    </View>
+);
 
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
       <SafeAreaView>
-        <ScrollView refreshControl={<RefreshControl tintColor={'#E0FE10'}refreshing={refreshing}onRefresh={onRefresh}/>} >
+        <View >
           {/* HEADER */}
           <View style={styles.header_search}>
             <HeaderText first="Calendar" second={null} />
@@ -229,6 +386,20 @@ export default function Planer() {
               </ScrollView>
             </View>
 
+          {/* LIST PLANER ACTIVE */}
+          <ScrollView style={styles.listPlaner} refreshControl={<RefreshControl tintColor={'#E0FE10'} refreshing={refreshing}onRefresh={onRefresh}/>} showsVerticalScrollIndicator={false}>
+            <SwipeListView
+                data={listData}
+                renderItem={renderItem}
+                renderHiddenItem={renderHiddenItem}
+                rightOpenValue={-164}
+                previewRowKey={'0'}
+                previewOpenValue={-40}
+                previewOpenDelay={0}
+                onRowDidOpen={onRowDidOpen}
+            />
+          </ScrollView>
+
           {/* ADD EXER BTN */}
           <TouchableOpacity style={{top: 620,position: 'absolute'}}>
             <View style={styles.botBtn}>
@@ -241,7 +412,7 @@ export default function Planer() {
               </Text>
             </View>
           </TouchableOpacity>
-        </ScrollView>
+        </View>
       </SafeAreaView>
       <Tabs/>
       <StatusBar style="light" />
@@ -286,5 +457,69 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 25,
     width: Dimensions.get('window').width - 50,
+  },
+  listPlaner: {
+    marginTop: 25,
+    flex: 1,
+    marginBottom: 150,
+    width: Dimensions.get('window').width - 50,
+  },
+
+  backTextWhite: {
+    color: 'white',
+  },
+  rowFront: {
+    backgroundColor: '#17181B',
+    alignItems: 'flex-start',
+    borderBottomColor: 'black',
+    borderBottomWidth: 1,
+    paddingHorizontal: 15,
+    paddingVertical: 6,
+    justifyContent: 'center',
+    borderRadius: 12,
+    marginBottom: 5,
+    height: 80,
+    width: Dimensions.get('window').width - 50,
+  },
+  rowBack: {
+    width: Dimensions.get('window').width - 50,
+    alignItems: 'center',
+    // backgroundColor: '#DDD',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    height: 80,
+    
+  },
+  backRightBtn: {
+    alignItems: 'center',
+    bottom: 0,
+    justifyContent: 'center',
+    position: 'absolute',
+    top: 0,
+    width: 50,
+  },
+  backRightBtnLeft: {
+    backgroundColor: '#1F3D18',
+    borderRadius: 12,
+    borderColor: '#38692D',
+    borderWidth: 1,
+    padding: 12,
+    right: 55,
+  },
+  backRightBtnRight: {
+    backgroundColor: '#470F0E',
+    borderRadius: 12,
+    borderColor: '#7B2722',
+    borderWidth: 1,
+    padding: 12,
+    right: 0,
+  },
+  backDelBtnRight: {
+    backgroundColor: '#17181B',
+    borderRadius: 10,
+    borderColor: '#27292E',
+    borderWidth: 1,
+    padding: 12,
+    right: 110,
   }
 })
