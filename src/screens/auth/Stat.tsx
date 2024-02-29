@@ -327,12 +327,6 @@ export default function Stat() {
             <RecentActiv icon={<GymIcon/>} title="Gym" kcal={354} min={120} time="Sun, 06:00 - 08:00"/>
             <RecentActiv icon={<RunningIcon/>} title="Running" kcal={120} min={60} time="Mon, 06:00 - 08:00"/>
           </View>
-
-
-
-
-
-
         </ScrollView>
       </SafeAreaView>
       <Tabs />
