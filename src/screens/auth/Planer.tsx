@@ -15,6 +15,7 @@ import { Path, Svg } from 'react-native-svg';
 import AddNewExercise from '../../modal/Planer/AddNewExercise';
 import { useNavigation } from '@react-navigation/native';
 import { useStore } from '../../services/ZustandModalPassword';
+import DeleteRow from '../../modal/Planer/DeleteRow';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -97,104 +98,139 @@ export default function Planer() {
     })
   }
   const [selectedMonth, setSelectedMonth] = useState(calendarDataMonth[selectI].month)
-  const [listData, setListData] = useState(
-    Array(20)
-        .fill('')
-        .map((_, i) => ({ key: `${i}`, text: `item #${i}` }))
-);
+  const [listData, setListData] = useState([
+      {
+        timeStart: '10:00',
+        titleSession: 'Cardio Session',
+        setQ: 2,
+        timeAll: 30,
+        breakTime: 10
+      },
+      {
+        timeStart: '13:45',
+        titleSession: 'Swimming',
+        setQ: 1,
+        timeAll: 40,
+        breakTime: 5
+      },
+      {
+        timeStart: '17:38',
+        titleSession: 'Running',
+        setQ: 1,
+        timeAll: 35,
+        breakTime: 10
+      },
+      {
+        timeStart: '20:08',
+        titleSession: 'Yoga',
+        setQ: 3,
+        timeAll: 85,
+        breakTime: 0
+      },
+    ]
+  );
+  const closeRow = (rowMap, rowKey) => {
+      if (rowMap[rowKey]) {
+          rowMap[rowKey].closeRow();
+      }
+  };
+  const deleteRow = (rowMap, rowKey) => {
+      closeRow(rowMap, rowKey);
+      const newData = [...listData];
+      const prevIndex = listData.findIndex(item => item.key === rowKey);
+      newData.splice(prevIndex, 1);
+      setListData(newData);
+  };
+  const onRowDidOpen = rowKey => {
+    // Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
+    console.log('This row opened', rowKey);
+  };
 
-const closeRow = (rowMap, rowKey) => {
-    if (rowMap[rowKey]) {
-        rowMap[rowKey].closeRow();
-    }
-};
-
-const deleteRow = (rowMap, rowKey) => {
-    closeRow(rowMap, rowKey);
-    const newData = [...listData];
-    const prevIndex = listData.findIndex(item => item.key === rowKey);
-    newData.splice(prevIndex, 1);
-    setListData(newData);
-};
-
-const onRowDidOpen = rowKey => {
-  // Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)
-  console.log('This row opened', rowKey);
-};
-
-const renderItem = data => (
-    <TouchableHighlight
-        onPress={() => console.log('You touched me')}
-        style={styles.rowFront}
-        underlayColor={'#8B8B8D'}
-    >
-        <View style={{
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-          gap: 15
-        }}>
-          {/* TEXT TIME DIV */}
-          <View>
-            <Text style={{
-              color: '#FFFFFF',
-              fontFamily: 'Light',
-              fontSize: 15,
-            }}>
-              10:00
-            </Text>
-            <Text style={{
-              color: '#FFFFFF',
-              fontFamily: 'Bold',
-              fontSize: 15,
-            }}>
-              -
-            </Text>
-            <Text style={{
-              color: '#FFFFFF',
-              fontFamily: 'Light',
-              fontSize: 15,
-            }}>
-              12:00
-            </Text>
-          </View>
-
-          {/* Vertical Green Line */}
-          <View style={{ height: '100%', width: 1, borderRadius:5, backgroundColor: '#E0FE10' }}></View>
-
-          {/* ACTIVE DIV */}
-          <View>
-            <Text style={{
-              color: '#FFFFFF',
-              fontFamily: 'Bold',
-              fontSize: 16,
-            }}>
-              Cardio Session
-            </Text>
+  const renderItem = data => (
+      <TouchableHighlight
+          onPress={() => console.log('You touched me')}
+          style={styles.rowFront}
+      >
+          <View style={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            gap: 15
+          }}>
+            {/* TEXT TIME DIV */}
             <View>
               <Text style={{
-                color: 'rgba(255,255,255,0.5)',
-                fontFamily: 'Regular',
-                fontSize: 14,
+                color: '#FFFFFF',
+                fontFamily: 'Light',
+                fontSize: 15,
               }}>
-                1 time - 30 min
+                {data.item.timeStart}
               </Text>
               <Text style={{
-                color: '#E0FE10',
-                fontFamily: 'Light',
-                fontSize: 12,
+                color: '#FFFFFF',
+                fontFamily: 'Bold',
+                fontSize: 15,
               }}>
-                Break: 15 min
+                -
+              </Text>
+              <Text style={{
+                color: '#FFFFFF',
+                fontFamily: 'Light',
+                fontSize: 15,
+              }}>
+                {
+                  // data.item.timeStart.slice(0,2)
+                  parseInt(data.item.timeStart.slice(3))+data.item.timeAll<60?
+                  `${data.item.timeStart.slice(0,2)}:${parseInt(data.item.timeStart.slice(3))+data.item.timeAll}`:
+                  `${parseInt(data.item.timeStart.slice(0,2))+parseInt((data.item.timeAll/60).toFixed(0))}:${parseInt(data.item.timeStart.slice(3))+data.item.timeAll-60}`
+                    
+                }
               </Text>
             </View>
-          </View>
-          </View>
 
-          
-    </TouchableHighlight>
-);
+            {/* Vertical Green Line */}
+            <View style={{ height: '100%', width: 1, borderRadius:5, backgroundColor: '#E0FE10' }}></View>
 
-const renderHiddenItem = (data, rowMap) => (
+            {/* ACTIVE DIV */}
+            <View>
+              <Text style={{
+                color: '#FFFFFF',
+                fontFamily: 'Bold',
+                fontSize: 16,
+              }}>
+                {data.item.titleSession}
+              </Text>
+              <View>
+                <Text style={{
+                  color: 'rgba(255,255,255,0.5)',
+                  fontFamily: 'Regular',
+                  fontSize: 14,
+                }}>
+                  {data.item.setQ} time - {data.item.timeAll<60?`${data.item.timeAll}min`: `${(data.item.timeAll/60).toFixed(0)}h ${data.item.timeAll%60}m`}
+                </Text>
+                <Text style={{
+                  color: '#E0FE10',
+                  fontFamily: 'Light',
+                  fontSize: 12,
+                }}>
+                  Break: {data.item.breakTime} min
+                </Text>
+              </View>
+            </View>
+            </View>
+
+            
+      </TouchableHighlight>
+  );
+
+  const navigation = useNavigation();
+  const modalVisible = useStore(state => state.visibleModal);
+  const setModalVisible = useStore(state => state.voidVisibleModal);
+
+  const modalVisibleDelete = useStore(state => state.visibleModalDelete);
+  const setModalVisibleDelete = useStore(state => state.voidVisibleModalDelete);
+
+  const renderHiddenItem = (data, rowMap) => (
     <View style={styles.rowBack}>
         <Text style={{color: 'transparent'}}>Left</Text>
         {/* DONE BTN */}
@@ -216,6 +252,7 @@ const renderHiddenItem = (data, rowMap) => (
         {/* DELETE BTN */}
         <TouchableOpacity
             style={[styles.backRightBtn, styles.backRightBtnRight]}
+            onPress={()=>setModalVisibleDelete(!modalVisibleDelete)}
         >
             <Svg width={19} height={20} fill="none">
               <Path
@@ -251,13 +288,12 @@ const renderHiddenItem = (data, rowMap) => (
         </TouchableOpacity>
     </View>
 );
-  const navigation = useNavigation();
-  const modalVisible = useStore(state => state.visibleModal);
-  const setModalVisible = useStore(state => state.voidVisibleModal);
-
+  
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
-      <Modal
+      {
+      !modalVisibleDelete?(
+        <Modal
           animationType="fade"
           transparent={true}
           visible={modalVisible}
@@ -265,8 +301,18 @@ const renderHiddenItem = (data, rowMap) => (
         >
           <AddNewExercise />
         </Modal>
+      ):
+        (<Modal
+          animationType="fade"
+          transparent={true}
+          visible={modalVisibleDelete}
+          onRequestClose={setModalVisibleDelete}
+        >
+          <DeleteRow />
+        </Modal>)
+      }
       <SafeAreaView>
-        <View style={!modalVisible?{ opacity: 1}:{ opacity: 0.15}}>
+        <View style={!modalVisible&&!modalVisibleDelete ?{ opacity: 1}:{ opacity: 0.15}}>
           {/* HEADER */}
           <View style={styles.header_search}>
             <HeaderText first="Calendar" second={null} />
