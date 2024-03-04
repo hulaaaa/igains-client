@@ -41,7 +41,7 @@ export default function DeleteRow() {
           justifyContent: 'space-between',
           gap: 40,
           }}>
-            <TouchableOpacity onPress={displayModal}style={{
+            <TouchableOpacity onPress={displayModal} style={{
               width: '48%',
               borderRadius: 12,
               borderColor: '#262626',
@@ -56,7 +56,7 @@ export default function DeleteRow() {
                 fontSize: 18,
               }}>No</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={{
+            <TouchableOpacity onPress={displayModal} style={{
               width: '48%',
               borderRadius: 12,
               borderColor: '#DF3525',

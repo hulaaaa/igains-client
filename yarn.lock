@@ -4150,7 +4150,7 @@ expo-constants@^15.4.5, expo-constants@~15.4.0:
   dependencies:
     "@expo/config" "~8.5.0"
 
-expo-dev-client@3.3.9:
+expo-dev-client@~3.3.9:
   version "3.3.9"
   resolved "https://registry.yarnpkg.com/expo-dev-client/-/expo-dev-client-3.3.9.tgz#4d96c96addeb43c385a727c81d3276d83871f834"
   integrity sha512-qODvuyXe8FgVJhBbwDEk/snZa5wSTNHx+poNXwA/PS4gGvOxCuG+qpeQF6K4Yf6r2+sV0OtigxPJiAyhu9I4ug==

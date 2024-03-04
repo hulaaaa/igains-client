@@ -230,6 +230,9 @@ export default function Planer() {
   const modalVisibleDelete = useStore(state => state.visibleModalDelete);
   const setModalVisibleDelete = useStore(state => state.voidVisibleModalDelete);
 
+  const modalVisibleEdit = useStore(state => state.visibleModalEdit);
+  const setModalVisibleEdit = useStore(state => state.voidVisibleModalEdit);
+
   const renderHiddenItem = (data, rowMap) => (
     <View style={styles.rowBack}>
         <Text style={{color: 'transparent'}}>Left</Text>
@@ -275,6 +278,7 @@ export default function Planer() {
         {/* EDIT BTN */}
         <TouchableOpacity
             style={[styles.backRightBtn, styles.backDelBtnRight]}
+            onPress={()=>setModalVisibleEdit(!modalVisibleEdit)}
         >
             <Svg width={17} height={18} fill="none">
               <Path
@@ -312,7 +316,7 @@ export default function Planer() {
         </Modal>)
       }
       <SafeAreaView>
-        <View style={!modalVisible&&!modalVisibleDelete ?{ opacity: 1}:{ opacity: 0.15}}>
+        <View style={!modalVisible&&!modalVisibleDelete&&!modalVisibleEdit ?{ opacity: 1}:{ opacity: 0.15}}>
           {/* HEADER */}
           <View style={styles.header_search}>
             <HeaderText first="Calendar" second={null} />
