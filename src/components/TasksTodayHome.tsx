@@ -1,41 +1,40 @@
+import ProgressCircle from 'react-native-progress-circle'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import DoneIcon from '../../assets/svg/DoneIcon';
 import GymIcon from '../../assets/svg/SportIcon/GymIcon';
 import RunningIcon from '../../assets/svg/SportIcon/RunningIcon';
 import SwimmingIcon from '../../assets/svg/SportIcon/SwimmingIcon';
+import SniperIcon from '../../assets/svg/SniperIcon';
+import ShinyStartIcon from '../../assets/svg/ShinyStartIcon';
+import GhostIcon from '../../assets/svg/GhostIcon';
 interface Task {
     title: string;
     icon: any,
-    completed: boolean;
+    present: number;
 }
 
 export default function TasksTodayHome() {
     let tasks: Task[] = [
         {
-            title: "Swimming",
-            icon: <SwimmingIcon/>,
-            completed: false,
+            title: "Shiny Star",
+            icon: <ShinyStartIcon/>,
+            present: 100,
         },
         {
-            title: "Yoga",
-            icon: <RunningIcon/>,
-            completed: true,
+            title: "Sniper",
+            icon: <SniperIcon/>,
+            present: 30,
         },
         {
-            title: "Running",
-            icon: <RunningIcon/>,
-            completed: false,
+            title: "Ghost",
+            icon: <GhostIcon/>,
+            present: 10,
         },
         {
-            title: "Gym",
-            icon: <GymIcon/>,
-            completed: false,
-        },
-        {
-            title: "Stretching",
-            icon: "🧎‍♂️",
-            completed: true,
+            title: "First Sweat",
+            icon: <ShinyStartIcon/>,
+            present: 0,
         },
     ]
 
@@ -46,19 +45,34 @@ export default function TasksTodayHome() {
                     return (
                         <View key={index} style={styles.taskG}>
                             {
-                                item.completed ? (
-                                    <View style={styles.innerTaskDone}>
-                                        <DoneIcon />
-                                    </View>
+                                item.present==100 ? (
+                                  <ProgressCircle
+                                    percent={item.present}
+                                    radius={35}
+                                    borderWidth={6}
+                                    color="#E0FE10"
+                                    shadowColor="#282728"
+                                    bgColor="#17181B"
+                                  >
+                                    {<DoneIcon />}
+                                  </ProgressCircle>
                                 ) : (
-                                    <View style={styles.innerTask}>
-                                        {item.icon}
-                                    </View>
+                                  <ProgressCircle
+                                    percent={item.present}
+                                    radius={35}
+                                    borderWidth={6}
+                                    color="#E0FE10"
+                                    shadowColor="#282728"
+                                    bgColor="#17181B"
+                                  >
+                                    {item.icon}
+                                  </ProgressCircle>
                                 )
                             }
 
                             <Text style={styles.innerText}>{item.title}</Text>
                         </View>
+                        
                     )
                 })
             }

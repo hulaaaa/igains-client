@@ -3,14 +3,14 @@
     "development": {
       "developmentClient": true,
       "distribution": "internal",
-      "channel": "development"
+      "channel": "master",
     },
     "preview": {
       "distribution": "internal",
-      "channel": "preview"
+      "channel": "master",
     },
     "production": {
-      "channel": "production"
+      "channel": "master",
     }
   }
 }
