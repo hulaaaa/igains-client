@@ -1,3 +1,4 @@
+import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import ProgressCircle from 'react-native-progress-circle'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
@@ -46,27 +47,37 @@ export default function TasksTodayHome() {
                         <View key={index} style={styles.taskG}>
                             {
                                 item.present==100 ? (
-                                  <ProgressCircle
-                                    percent={item.present}
-                                    radius={35}
-                                    borderWidth={6}
-                                    color="#E0FE10"
-                                    shadowColor="#282728"
-                                    bgColor="#17181B"
-                                  >
-                                    {<DoneIcon />}
-                                  </ProgressCircle>
+                                  <AnimatedCircularProgress
+                                  size={68}
+                                  width={6}
+                                  fill={item.present}
+                                  rotation={0}
+                                  tintColor="#E0FE10"
+                                  duration={800}
+                                  backgroundColor="#282728">
+                                  {
+
+                                    (fill) => (
+                                      <DoneIcon/>
+                                    )
+                                  }
+                                </AnimatedCircularProgress>
                                 ) : (
-                                  <ProgressCircle
-                                    percent={item.present}
-                                    radius={35}
-                                    borderWidth={6}
-                                    color="#E0FE10"
-                                    shadowColor="#282728"
-                                    bgColor="#17181B"
-                                  >
-                                    {item.icon}
-                                  </ProgressCircle>
+                                  <AnimatedCircularProgress
+                                    size={68}
+                                    width={6}
+                                    fill={item.present}
+                                    rotation={0}
+                                    tintColor="#E0FE10"
+                                    backgroundColor="#282728">
+                                    {
+                                      (fill) => (
+                                        <View >
+                                          {item.icon}
+                                        </View>
+                                      )
+                                    }
+                                  </AnimatedCircularProgress>
                                 )
                             }
 
@@ -91,7 +102,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'column',
         gap: 7,
-        marginRight: 15,
+        marginRight: 19,
         alignItems: 'center',
         borderRadius: 10,
     },
