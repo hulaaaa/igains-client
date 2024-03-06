@@ -64,7 +64,7 @@ export default function Home() {
         
           {/* TASKS for TODAY */}
           <View style={styles.divtasks}>
-            <Text style={{ fontFamily: 'Regular', fontSize: 21, color: 'white', }}>Tasks for Today 🔥</Text>
+            <Text style={{ fontFamily: 'Regular', fontSize: 21, color: 'white', }}>Complete your Awards 🔥</Text>
             <TasksTodayHome />
           </View>
 
@@ -117,5 +117,4 @@ const styles = StyleSheet.create({
     marginTop: 20,
     width: Dimensions.get('window').width - 50,
   },
-
 })
