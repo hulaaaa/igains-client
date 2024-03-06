@@ -48,7 +48,7 @@ export default function TasksTodayHome() {
                             {
                                 item.present==100 ? (
                                   <AnimatedCircularProgress
-                                  size={68}
+                                  size={75}
                                   width={6}
                                   fill={item.present}
                                   rotation={0}
@@ -64,7 +64,7 @@ export default function TasksTodayHome() {
                                 </AnimatedCircularProgress>
                                 ) : (
                                   <AnimatedCircularProgress
-                                    size={68}
+                                    size={75}
                                     width={6}
                                     fill={item.present}
                                     rotation={0}
