@@ -36,7 +36,8 @@ export default function Home() {
     setTimeout(() => {
       setRefreshing(false);
     }, 800);
-  };
+  }
+  
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
       <SafeAreaView>
