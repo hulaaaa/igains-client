@@ -46,10 +46,7 @@ export default function TasksTodayHome() {
             {
                 tasks.map((item, index) => {
                     return (
-                        <TouchableOpacity onPress={()=>{
-                          navigation.navigate('Profile')
-
-                        }}
+                        <TouchableOpacity onPress={()=>navigation.navigate('Profile')}
                         key={index} style={styles.taskG}>
                             {
                                 item.present==100 ? (
