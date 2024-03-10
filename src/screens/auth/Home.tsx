@@ -1,4 +1,4 @@
-import { Button, Dimensions, RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Button, Dimensions, Modal, RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
 import Tabs from '../../components/Tabs'
 import { useCallback } from 'react';
@@ -11,6 +11,8 @@ import TasksTodayHome from '../../components/TasksTodayHome';
 import FavExercises from '../../components/FavExercises';
 import { StatusBar } from 'expo-status-bar';
 import TrainingCourse from '../../components/TrainingCourse';
+import { useStore } from '../../services/ZustandModalPassword';
+import AwardsPrewiew from '../../modal/Home/AwardsPrewiew';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -42,11 +44,22 @@ export default function Home() {
     setTimeout(() => {
       setRefreshing(false);
     }, 800);
-};
+  };
+  const modalVisible = useStore(state => state.visibleModalAwards);
+  const setModalVisible = useStore(state => state.voidVisibleModalAwards);
 
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
-      <SafeAreaView >
+      <Modal
+      
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={setModalVisible}
+      >
+        <AwardsPrewiew />
+      </Modal>
+      <SafeAreaView style={!modalVisible?{ opacity: 1}:{ opacity: 0.15}} >
       <ScrollView
         refreshControl={
           <RefreshControl
@@ -91,6 +104,7 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    
     alignItems: 'center',
     backgroundColor: '#06070A'
   },

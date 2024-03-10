@@ -1,6 +1,6 @@
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import ProgressCircle from 'react-native-progress-circle'
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import DoneIcon from '../../assets/svg/DoneIcon';
 import GymIcon from '../../assets/svg/SportIcon/GymIcon';
@@ -9,6 +9,7 @@ import SwimmingIcon from '../../assets/svg/SportIcon/SwimmingIcon';
 import SniperIcon from '../../assets/svg/SniperIcon';
 import ShinyStartIcon from '../../assets/svg/ShinyStartIcon';
 import GhostIcon from '../../assets/svg/GhostIcon';
+import { useStore } from '../services/ZustandModalPassword';
 interface Task {
     title: string;
     icon: any,
@@ -38,13 +39,23 @@ export default function TasksTodayHome() {
             present: 0,
         },
     ]
+  const modalVisible = useStore(state => state.visibleModalAwards);
+  const setModalVisible = useStore(state => state.voidVisibleModalAwards);
 
+  const awardsItem = useStore(state => state.awardsItem);
+  const setAwardsItem = useStore(state => state.voidAwardsItem);
+  
     return (
         <ScrollView showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false} horizontal={true} style={styles.container}>
             {
                 tasks.map((item, index) => {
                     return (
-                        <View key={index} style={styles.taskG}>
+                        <TouchableOpacity onPress={()=>{
+                          setModalVisible(!modalVisible),
+                          setAwardsItem(item)
+                          }
+                        }
+                        key={index} style={styles.taskG}>
                             {
                                 item.present==100 ? (
                                   <AnimatedCircularProgress
@@ -82,7 +93,7 @@ export default function TasksTodayHome() {
                             }
 
                             <Text style={styles.innerText}>{item.title}</Text>
-                        </View>
+                        </TouchableOpacity>
                         
                     )
                 })
