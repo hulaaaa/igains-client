@@ -18,6 +18,7 @@ interface Task {
 }
 
 export default function TasksTodayHome() {
+  
   const navigation = useNavigation<any>();
   let tasks: Task[] = [
       {

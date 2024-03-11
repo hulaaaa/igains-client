@@ -1,5 +1,7 @@
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useEffect } from 'react'
+import { useNavigation } from '@react-navigation/native';
+
 interface Task {
   title: string;
   image: any;
@@ -34,13 +36,14 @@ export default function TrainingCourse() {
       isNew: true,
     },
   ]
+  const navigation = useNavigation<any>();
 
   return (
     <ScrollView pagingEnabled={true} showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false} horizontal={true} style={styles.container}>
       {
         tasks.map((item, index) => {
           return (
-            <TouchableOpacity key={index} style={styles.taskG}>
+            <TouchableOpacity key={index} style={styles.taskG} onPress={Alert.alert('d')} >
               {
                 item.isNew ? (
                   <View style={styles.innerTaskDone}>
