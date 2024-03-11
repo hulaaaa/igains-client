@@ -43,7 +43,11 @@ export default function TrainingCourse() {
       {
         tasks.map((item, index) => {
           return (
+<<<<<<< HEAD
             <TouchableOpacity key={index} style={styles.taskG} onPress={()=>navigation.navigate('SelectWork')} >
+=======
+            <TouchableOpacity key={index} style={styles.taskG} onPress={Alert.alert('d')} >
+>>>>>>> 3a20f0bc42af0017c948236814669fea45146814
               {
                 item.isNew ? (
                   <View style={styles.innerTaskDone}>

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Alert, Dimensions, Image, RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
@@ -7,6 +8,14 @@ import { Path, Svg } from 'react-native-svg';
 SplashScreen.preventAutoHideAsync();
 import { useNavigation } from '@react-navigation/native';
 import { useStore } from '../../services/ZustandModalPassword';
+=======
+import { RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
+import React, { useCallback, useState } from 'react'
+import { StatusBar } from 'expo-status-bar'
+import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
+SplashScreen.preventAutoHideAsync();
+>>>>>>> 3a20f0bc42af0017c948236814669fea45146814
 
 export default function SelectWork() {
   const [refreshing, setRefreshing] = useState(false);
@@ -32,6 +41,7 @@ export default function SelectWork() {
       setRefreshing(false);
     }, 800);
   }
+<<<<<<< HEAD
   const navigation = useNavigation<any>();
 
   const workout = [
@@ -66,6 +76,8 @@ export default function SelectWork() {
   ]
   const [workoutItem,setWorkout] = useState(workout)
   const voidSelectWorkout = useStore(state=>state.voidSelectWorkout)
+=======
+>>>>>>> 3a20f0bc42af0017c948236814669fea45146814
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
       <SafeAreaView>
@@ -76,6 +88,7 @@ export default function SelectWork() {
             onRefresh={onRefresh}
           />
         } showsVerticalScrollIndicator={false}>
+<<<<<<< HEAD
           <View style={styles.header}>
             <TouchableOpacity style={{padding: 5}} onPress={()=>navigation.navigate('Home')}>
               <Svg
@@ -283,6 +296,10 @@ export default function SelectWork() {
               Start Workout
             </Text>
         </TouchableOpacity>
+=======
+          <Text>SelectWork</Text>
+        </ScrollView>
+>>>>>>> 3a20f0bc42af0017c948236814669fea45146814
       </SafeAreaView>
       <StatusBar style="light" />
     </View>
@@ -292,6 +309,7 @@ export default function SelectWork() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+<<<<<<< HEAD
     alignItems: 'center',
     backgroundColor: '#06070A'
   },
@@ -317,4 +335,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#E0FE10',
     borderRadius: 12,
   }
+=======
+    
+    alignItems: 'center',
+    backgroundColor: '#06070A'
+  },
+>>>>>>> 3a20f0bc42af0017c948236814669fea45146814
 })
