@@ -9,7 +9,8 @@ import SwimmingIcon from '../../assets/svg/SportIcon/SwimmingIcon';
 import SniperIcon from '../../assets/svg/SniperIcon';
 import ShinyStartIcon from '../../assets/svg/ShinyStartIcon';
 import GhostIcon from '../../assets/svg/GhostIcon';
-import { useStore } from '../services/ZustandModalPassword';
+import { useNavigation } from '@react-navigation/native';
+
 interface Task {
     title: string;
     icon: any,
@@ -17,44 +18,36 @@ interface Task {
 }
 
 export default function TasksTodayHome() {
-    let tasks: Task[] = [
-        {
-            title: "Shiny Star",
-            icon: <ShinyStartIcon/>,
-            present: 100,
-        },
-        {
-            title: "Sniper",
-            icon: <SniperIcon/>,
-            present: 30,
-        },
-        {
-            title: "Ghost",
-            icon: <GhostIcon/>,
-            present: 10,
-        },
-        {
-            title: "First Sweat",
-            icon: <ShinyStartIcon/>,
-            present: 0,
-        },
-    ]
-  const modalVisible = useStore(state => state.visibleModalAwards);
-  const setModalVisible = useStore(state => state.voidVisibleModalAwards);
-
-  const awardsItem = useStore(state => state.awardsItem);
-  const setAwardsItem = useStore(state => state.voidAwardsItem);
   
+  const navigation = useNavigation<any>();
+  let tasks: Task[] = [
+      {
+          title: "Shiny Star",
+          icon: <ShinyStartIcon/>,
+          present: 100,
+      },
+      {
+          title: "Sniper",
+          icon: <SniperIcon/>,
+          present: 30,
+      },
+      {
+          title: "Ghost",
+          icon: <GhostIcon/>,
+          present: 10,
+      },
+      {
+          title: "First Sweat",
+          icon: <ShinyStartIcon/>,
+          present: 0,
+      },
+  ]
     return (
         <ScrollView showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false} horizontal={true} style={styles.container}>
             {
                 tasks.map((item, index) => {
                     return (
-                        <TouchableOpacity onPress={()=>{
-                          setModalVisible(!modalVisible),
-                          setAwardsItem(item)
-                          }
-                        }
+                        <TouchableOpacity onPress={()=>navigation.navigate('Profile')}
                         key={index} style={styles.taskG}>
                             {
                                 item.present==100 ? (

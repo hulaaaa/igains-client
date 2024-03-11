@@ -1,26 +1,20 @@
-import { Button, Dimensions, Modal, RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
-import Tabs from '../../components/Tabs'
-import { useCallback } from 'react';
+import { Dimensions, Modal, RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import React, { useState, useCallback } from 'react';
+import Tabs from '../../components/Tabs';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
-import Animated from 'react-native-reanimated';
 import HeaderText from '../../components/HeaderText';
 import SearchBar from '../../components/SearchBar';
 import TasksTodayHome from '../../components/TasksTodayHome';
 import FavExercises from '../../components/FavExercises';
 import { StatusBar } from 'expo-status-bar';
 import TrainingCourse from '../../components/TrainingCourse';
-import { useStore } from '../../services/ZustandModalPassword';
-import AwardsPrewiew from '../../modal/Home/AwardsPrewiew';
 
 SplashScreen.preventAutoHideAsync();
 
 
 export default function Home() {
   const [refreshing, setRefreshing] = useState(false);
-
-  const [progress, setProgress] = useState(0.5);
   const [fontsLoaded, fontError] = useFonts({
     'Regular': require('../../../assets/fonts/regular.otf'),
     'RegularItalic': require('../../../assets/fonts/regular-italic.otf'),
@@ -29,13 +23,11 @@ export default function Home() {
     'Bold': require('../../../assets/fonts/bold.otf'),
     'BoldItalic': require('../../../assets/fonts/bold-italic.otf'),
   });
-
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded || fontError) {
       await SplashScreen.hideAsync();
     }
   }, [fontsLoaded, fontError]);
-
   if (!fontsLoaded && !fontError) {
     return null;
   }
@@ -44,22 +36,11 @@ export default function Home() {
     setTimeout(() => {
       setRefreshing(false);
     }, 800);
-  };
-  const modalVisible = useStore(state => state.visibleModalAwards);
-  const setModalVisible = useStore(state => state.voidVisibleModalAwards);
-
+  }
+  
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
-      <Modal
-      
-        animationType="fade"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={setModalVisible}
-      >
-        <AwardsPrewiew />
-      </Modal>
-      <SafeAreaView style={!modalVisible?{ opacity: 1}:{ opacity: 0.15}} >
+      <SafeAreaView>
       <ScrollView
         refreshControl={
           <RefreshControl
