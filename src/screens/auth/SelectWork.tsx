@@ -7,6 +7,7 @@ import { Path, Svg } from 'react-native-svg';
 SplashScreen.preventAutoHideAsync();
 import { useNavigation } from '@react-navigation/native';
 import { useStore } from '../../services/ZustandModalPassword';
+import { Workout } from '../../services/ZustandModalPassword'; 
 
 export default function SelectWork() {
   const [refreshing, setRefreshing] = useState(false);
@@ -26,46 +27,66 @@ export default function SelectWork() {
   if (!fontsLoaded && !fontError) {
     return null;
   }
+  const navigation = useNavigation<any>();
+  const workout = [
+    {
+      id: 0,
+      title: "Running",
+      image: { uri: "https://firebasestorage.googleapis.com/v0/b/i-gains.appspot.com/o/Image%20Home%20Screen%2F1.png?alt=media&token=3dacd2f4-6fb4-4bcb-9879-f3c823f0c03c" },
+      min: 15,
+      kcal: 70,
+      select: false,
+    },
+    {
+      id: 1,
+      title: "Swimming",
+      image: { uri: "https://firebasestorage.googleapis.com/v0/b/i-gains.appspot.com/o/Image%20Home%20Screen%2F2.png?alt=media&token=d38205e5-b3b1-4cec-8e44-76c80054c4d9" },
+      min: 120,
+      kcal: 450,
+      select: false,
+    },
+    {
+      id: 2,
+      title: "Boxing",
+      image: { uri: "https://firebasestorage.googleapis.com/v0/b/i-gains.appspot.com/o/Image%20Home%20Screen%2F1.png?alt=media&token=3dacd2f4-6fb4-4bcb-9879-f3c823f0c03c" },
+      min: 10,
+      kcal: 80,
+      select: false,
+    },
+    {
+      id: 3,
+      title: "Stretching",
+      image: { uri: "https://firebasestorage.googleapis.com/v0/b/i-gains.appspot.com/o/Image%20Home%20Screen%2F2.png?alt=media&token=d38205e5-b3b1-4cec-8e44-76c80054c4d9" },
+      min: 30,
+      kcal: 150,
+      select: false,
+    }
+  ];
+  const [workoutItem, setWorkout] = useState(workout);
+
+  const voidSelectWorkout = useStore((state) => state.voidSelectWorkout);
+
+  const toggleSelect = useCallback((id) => {
+    setWorkout((prevWorkouts) =>
+      prevWorkouts.map((workout) =>
+        workout.id === id ? { ...workout, select: !workout.select } : workout
+      )
+    );
+  }, []);
+
+  const handleStartWorkout = () => {
+    const selectedWorkouts = workoutItem.filter(workout => workout.select);
+    voidSelectWorkout(selectedWorkouts);
+    navigation.navigate('Workout');
+  };
+
   const onRefresh = () => {
     setRefreshing(true);
     setTimeout(() => {
       setRefreshing(false);
     }, 800);
   }
-  const navigation = useNavigation<any>();
 
-  const workout = [
-    {
-      title: "Running",
-      image: {uri: "https://firebasestorage.googleapis.com/v0/b/i-gains.appspot.com/o/Image%20Home%20Screen%2F1.png?alt=media&token=3dacd2f4-6fb4-4bcb-9879-f3c823f0c03c"},
-      min: 15,
-      kcal: 70,
-      select: true,
-    },
-    {
-      title: "Sucking",
-      image: {uri: "https://firebasestorage.googleapis.com/v0/b/i-gains.appspot.com/o/Image%20Home%20Screen%2F2.png?alt=media&token=d38205e5-b3b1-4cec-8e44-76c80054c4d9"},
-      min: 120,
-      kcal: 450,
-      select: false,
-    },
-    {
-      title: "Fucking",
-      image: {uri: "https://firebasestorage.googleapis.com/v0/b/i-gains.appspot.com/o/Image%20Home%20Screen%2F1.png?alt=media&token=3dacd2f4-6fb4-4bcb-9879-f3c823f0c03c"},
-      min: 10,
-      kcal: 80,
-      select: true,
-    },
-    {
-      title: "Mother fucking",
-      image: {uri: "https://firebasestorage.googleapis.com/v0/b/i-gains.appspot.com/o/Image%20Home%20Screen%2F2.png?alt=media&token=d38205e5-b3b1-4cec-8e44-76c80054c4d9"},
-      min: 30,
-      kcal: 150,
-      select: true,
-    }
-  ]
-  const [workoutItem,setWorkout] = useState(workout)
-  const voidSelectWorkout = useStore(state=>state.voidSelectWorkout)
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
       <SafeAreaView>
@@ -99,7 +120,7 @@ export default function SelectWork() {
                 fontSize: 21,
                 fontFamily: 'Regular',
               
-              }}>Full Strenght Legs and dick </Text>
+              }}>Full Strenght Legs and Arms </Text>
             </View>
             <View>
               <Svg
@@ -152,10 +173,7 @@ export default function SelectWork() {
                         {
                           item.select ? (
                             <TouchableOpacity 
-                            onPress={()=>{
-                              setWorkout(prevState => prevState.map((workout, idx) => idx === index ? {...workout, select: !workout.select} : workout))
-                              voidSelectWorkout(workoutItem)
-                            }}
+                            onPress={() => toggleSelect(item.id)}
                             style={{
                               width: 35,
                               height: 35,
@@ -183,10 +201,7 @@ export default function SelectWork() {
                             </TouchableOpacity>
                           ):(
                             <TouchableOpacity 
-                            onPress={()=>{
-                              setWorkout(prevState => prevState.map((workout, idx) => idx === index ? {...workout, select: !workout.select} : workout))
-                              voidSelectWorkout(workoutItem)
-                            }}                            
+                            onPress={() => toggleSelect(item.id)}                       
                             style={{
                               width: 35,
                               height: 35,
@@ -272,7 +287,7 @@ export default function SelectWork() {
           
         </ScrollView>
         <TouchableOpacity 
-          onPress={()=>navigation.navigate('Workout')}
+          onPress={handleStartWorkout}
           style={styles.btnGo}>
             <Text style={{
               color: '#17181B',

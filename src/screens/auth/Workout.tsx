@@ -1,9 +1,11 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, { useEffect } from 'react'
 import { useStore } from '../../services/ZustandModalPassword';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Workout() {
-  const selectWorkout = useStore(state => state.selectWorkout);
+  const selectedWorkouts = useStore((state) => state.selectWorkout);
+
   // Alert.alert(
   //   ' changes?',
   //   'You have unsaved changes. Are you sure to discard them and leave the screen?',
@@ -16,9 +18,14 @@ export default function Workout() {
   //     },
   //   ]
   // );
+  const navigation = useNavigation<any>();
+
   return (
     <View style={{flex: 1,backgroundColor: 'black',alignItems:'center'}}>
-      <Text style={{color: 'white',fontSize:30,marginTop:40}}>{selectWorkout[3].title}</Text>
+      <TouchableOpacity style={{marginTop:40}} onPress={()=>navigation.navigate('SelectWork')}><Text style={{color: 'red',fontSize:30,}}>QUITE</Text></TouchableOpacity>
+      {selectedWorkouts.map((item) =>
+         (<Text style={{color:'white',fontSize:30}} key={item.id}>{item.title}</Text>)
+      )}
     </View>
   )
 }

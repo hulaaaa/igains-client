@@ -1,30 +1,38 @@
 import { create } from 'zustand';
+export type Workout = {
+  id: number;
+  title: string;
+  image: { uri: string };
+  min: number;
+  kcal: number;
+  select: boolean;
+};
+
 
 type Store = {
-  visibleModal: boolean
-  voidVisibleModal: () => void
+  visibleModal: boolean;
+  voidVisibleModal: () => void;
 
-  visibleModalDelete: boolean
-  voidVisibleModalDelete: () => void
+  visibleModalDelete: boolean;
+  voidVisibleModalDelete: () => void;
 
-  visibleModalEdit: boolean
-  voidVisibleModalEdit: () => void
+  visibleModalEdit: boolean;
+  voidVisibleModalEdit: () => void;
 
-  selectWorkout: [{}]
-  voidSelectWorkout: () => void
-}
+  selectWorkout: Workout[];
+  voidSelectWorkout: (items: Workout[]) => void;
+};
 
+export const useStore = create<Store>((set) => ({
+  visibleModal: false,
+  voidVisibleModal: () => set((state) => ({ visibleModal: !state.visibleModal })),
 
-export const useStore = create<Store>()((set) => ({
-    visibleModal: false,
-    voidVisibleModal: () => set((state) => ({ visibleModal: !state.visibleModal })),
+  visibleModalDelete: false,
+  voidVisibleModalDelete: () => set((state) => ({ visibleModalDelete: !state.visibleModalDelete })),
 
-    visibleModalDelete: false,
-    voidVisibleModalDelete: () => set((state) => ({ visibleModalDelete: !state.visibleModalDelete })),
+  visibleModalEdit: false,
+  voidVisibleModalEdit: () => set((state) => ({ visibleModalEdit: !state.visibleModalEdit })),
 
-    visibleModalEdit: false,
-    voidVisibleModalEdit: () => set((state) => ({ visibleModalEdit: !state.visibleModalEdit })),
-    
-    selectWorkout: [{}],
-    voidSelectWorkout: (item:[{}]) => set((state) => ({ selectWorkout: item }))
-}))
+  selectWorkout: [],
+  voidSelectWorkout: (items: Workout[]) => set({ selectWorkout: items }),
+}));
