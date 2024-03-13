@@ -66,7 +66,7 @@ export default function SelectWork() {
 
   const voidSelectWorkout = useStore((state) => state.voidSelectWorkout);
 
-  const toggleSelect = useCallback((id) => {
+  const toggleSelect = useCallback((id:number) => {
     setWorkout((prevWorkouts) =>
       prevWorkouts.map((workout) =>
         workout.id === id ? { ...workout, select: !workout.select } : workout

@@ -12,7 +12,7 @@ function MainRouterStack() {
     <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
       <Stack.Screen options={{ animation: 'fade',  gestureEnabled: false }} name="Home" component={Home} />
       <Stack.Screen options={{ animation: 'fade',  gestureEnabled: true }} name="SelectWork" component={SelectWork} />
-      <Stack.Screen options={{ animation: 'fade',  gestureEnabled: true }} name="Workout" component={Workout} />
+      <Stack.Screen options={{ animation: 'fade',  gestureEnabled: false }} name="Workout" component={Workout} />
       <Stack.Screen options={{ animation: 'fade', gestureEnabled: false}} name="Stat" component={Stat} />
       <Stack.Screen options={{ animation: 'fade', gestureEnabled: false }} name="Planer" component={Planer} />
       <Stack.Screen options={{ animation: 'fade', gestureEnabled: false }} name="Profile" component={Profile} />
