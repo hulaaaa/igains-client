@@ -127,7 +127,7 @@ export default function Workout() {
             fontSize: 15,
             fontFamily: 'Regular',
           }}>
-            COMPLETed
+            COMPLETED
           </Text>
           <Text style={{
             color: '#06070A',
